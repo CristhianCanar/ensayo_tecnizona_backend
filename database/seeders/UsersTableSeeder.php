@@ -1,6 +1,8 @@
 <?php
 
-use App\User;
+namespace Database\Seeders;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
         $user = new User();
         $user->nombre   = 'Admin';
-        $user->correo    = 'admin@admin.com';
+        $user->email    = 'admin@admin.com';
         $user->password  = Hash::make('admin0000');
         $user->save();
     }

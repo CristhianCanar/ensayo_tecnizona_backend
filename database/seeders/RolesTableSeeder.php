@@ -1,6 +1,8 @@
 <?php
 
-use App\Rol;
+namespace Database\Seeders;
+
+use App\Models\Rol;
 use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
@@ -20,6 +22,11 @@ class RolesTableSeeder extends Seeder
         $role = new Rol();
         $role->rol         = 'user';
         $role->descripcion = 'Usuario';
+        $role->save();
+
+        $role = new Rol();
+        $role->rol         = 'cliente';
+        $role->descripcion = 'Cliente';
         $role->save();
     }
 }

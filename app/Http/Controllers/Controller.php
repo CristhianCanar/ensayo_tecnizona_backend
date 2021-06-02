@@ -38,7 +38,7 @@ class Controller extends BaseController
             // Base URI is used with relative requests
             'base_uri' => 'https://shopcommerce.mps.com.co:7071/',
             // You can set any number of default request options.
-            'timeout'  => 15.0,
+            'timeout'  => 25.0,
         ]);
     }
 

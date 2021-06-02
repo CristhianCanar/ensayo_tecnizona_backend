@@ -14,5 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('login'));
 });
+
+Route::get('/home', function () {
+    return view('admin.dashboard.dashboard');
+})->middleware(['auth'])->name('home');
+
+Route::resource('producto', ProductoController::class)->middleware(['auth']);
+Route::resource('user', UserController::class)->middleware(['auth']);
+Route::resource('pedido', PedidoController::class)->middleware(['auth']);
+
+require __DIR__.'/auth.php';
