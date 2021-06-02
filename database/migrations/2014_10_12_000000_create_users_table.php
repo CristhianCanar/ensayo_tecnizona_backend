@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->integerIncrements('id_user');
-            $table->string('nombre','50');
+            $table->string('nombre','80');
             $table->string('telefono','15');
             /* $table->string('apellidos','50');
             *Crear path de imagen
@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('email','50')->unique();
             $table->string('password','100');
             $table->boolean('autorizacion_correo');
+            $table->text('url_foto')->nullable();
             //$table->boolean('terminos_condiciones')->nullable();
             $table->string('api_token','60')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();

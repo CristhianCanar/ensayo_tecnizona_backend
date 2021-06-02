@@ -16,3 +16,16 @@
       });
     }, false);
   })();
+
+$(document).ready(function(){
+    $("#mostrar-password").click(function (){
+        if ($(this).hasClass("fa-eye-slash") == true) {
+            $(this).removeClass("fa-eye-slash").addClass("fa-eye");
+            $("#password").attr("type", "text");
+        }
+        else {
+            $(this).removeClass("fa-eye").addClass("fa-eye-slash");
+            $("#password").attr("type", "password");
+        }
+    });
+});

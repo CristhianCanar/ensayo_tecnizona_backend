@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-inner">
     <div class="page-header">
-        <h4 class="page-title">Modificar Cliente</h4>
+        <h4 class="page-title">Modificar Usuario</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="{{route('home')}}">
@@ -14,13 +14,13 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="{{ route('cliente.index') }}">Clientes</a>
+                <a href="{{ route('user.index') }}">Usuarios</a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="{{ route('cliente.edit', $cliente->id_cliente) }}">Modificar Cliente</a>
+                <a href="{{ route('user.edit', $user->id_user) }}">Modificar Usuario</a>
             </li>
         </ul>
     </div>
@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        <form class="needs-validation" method="POST" action="{{ route('cliente.update', $cliente->id_cliente) }}" novalidate>
+                        <form class="needs-validation" method="POST" action="{{ route('user.update', $user->id_user) }}" novalidate>
                             @csrf
                             @method('PUT')
                             <div class="form-row justify-content-center">
@@ -37,7 +37,7 @@
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
                                             title="Campo Obligatorio">*</span> Nombres</label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre" value="{{ $cliente->nombre }}"
+                                        name="nombre" id="nombre" value="{{ $user->nombre }}"
                                         placeholder="Ej: Juan Jose" maxlength="50" required>
                                     @error('nombre')
                                         <div class="invalid-feedback">
@@ -50,7 +50,7 @@
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
                                             title="Campo Obligatorio">*</span> Dirección</label>
                                     <input type="text" class="form-control @error('direccion') is-invalid @enderror"
-                                        name="direccion" id="direccion" value="{{!empty($cliente->direccion) ? $cliente->direccion:"Sin dirección registrada" }}"
+                                        name="direccion" id="direccion" value="{{!empty($user->direccion) ? $user->direccion:"Sin dirección registrada" }}"
                                         placeholder="Ej: Calle 65 # 12-95" maxlength="50">
                                     @error('direccion')
                                         <div class="invalid-feedback">
@@ -64,7 +64,7 @@
                                             title="Campo Obligatorio">*</span> Teléfono Principal</label>
 
                                     <input type="text" class="form-control @error('telefono_principal') is-invalid @enderror"
-                                        name="telefono_principal" id="telefono_principal" value="{{ $cliente->telefono_principal }}"
+                                        name="telefono_principal" id="telefono_principal" value="{{ $user->telefono_principal }}"
                                         placeholder="Ej: 3221233456" maxlength="15" required>
                                     @error('telefono_principal')
                                         <div class="invalid-feedback">
@@ -76,7 +76,7 @@
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text">Teléfono Secundario</label>
                                     <input type="text" class="form-control @error('telefono_secundario') is-invalid @enderror"
-                                        name="telefono_secundario" id="telefono_secundario" value="{{!empty($cliente->telefono_secundario) ? $cliente->telefono_secundario:"Sin teléfeno" }}"
+                                        name="telefono_secundario" id="telefono_secundario" value="{{!empty($user->telefono_secundario) ? $user->telefono_secundario:"Sin teléfeno" }}"
                                         placeholder="Ej: 838123347" maxlength="15">
                                     @error('telefono_secundario')
                                         <div class="invalid-feedback">
@@ -89,7 +89,7 @@
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
                                             title="Campo Obligatorio">*</span> Correo</label>
                                     <input type="email" class="form-control @error('correo') is-invalid @enderror"
-                                        name="correo" id="correo" value="{{  $cliente->correo }}"
+                                        name="correo" id="correo" value="{{  $user->correo }}"
                                         placeholder="Ej: juan.ortega@gmail.com" maxlength="50" autocomplete="new-text"
                                         required>
                                     @error('correo')
@@ -104,7 +104,7 @@
                                             title="Campo Obligatorio">*</span> Nueva Contraseña</label>
                                     <div class="input-group">
                                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                            name="password" id="password" maxlength="50" value="{{$cliente->password}}" disabled required>
+                                            name="password" id="password" maxlength="50" value="{{$user->password}}" disabled required>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <i class="fas fa-eye-slash color-azul" id="mostrar-password"></i>
@@ -123,7 +123,7 @@
                                         <label class="custom-control-label float-right" for="cambiar_password"  style="margin-top: 40px" data-toggle="tooltip" title="Cambiar Contraseña" data-placement="right"></label>
                                     </div>
                                 </div>
-                                @if ($cliente->autorizacion_correo == 1)
+                                @if ($user->autorizacion_correo == 1)
                                     <div class="form-group col-10 col-lg-8 custom-control custom-checkbox" style="cursor: context-menu">
                                         <input type="checkbox" class="custom-control-input " id="autorizacion_correo" name="autorizacion_correo" checked>
                                         <label class="custom-control-label float-left ml-3" for="autorizacion_correo">Inscrito en la lista de correos</label>
