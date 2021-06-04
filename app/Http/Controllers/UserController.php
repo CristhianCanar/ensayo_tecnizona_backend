@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Modulo;
+use App\Models\ModuloRol;
 use App\Models\Rol;
+use App\Models\RolUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +32,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.usuarios.registrar');
+        $roles = Rol::orderBy('rol')->get();
+        return view('admin.usuarios.registrar', compact('roles'));
     }
 
     /**
@@ -40,26 +44,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'               => 'required|string|max:80',
+            'telefono'             => 'required|string|max:15',
+            'email'                => 'required|string|email|max:50|unique:users',
+            'password'             => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
         $autorizacion_correo = 0;
         if ($request->autorizacion_correo == "on") {
             $autorizacion_correo = 1;
         }
 
-        $request->validate([
-            'nombre'               => 'required|string|max:50',
-            'email'                => 'required|email|unique:users,email|max:50',
-            'password'             => ['required', 'confirmed', Rules\Password::defaults()],
-            'autorizacion_correo'  => 'required',
-        ]);
-
         $usuario = new User();
         $usuario->nombre              = $request->nombre;
+        $usuario->telefono            = $request->telefono;
         $usuario->email               = $request->email;
         $usuario->password            = Hash::make($request->input('password'));
         $usuario->autorizacion_correo = $autorizacion_correo;
         $usuario->save();
 
-        $rol = Rol::where('id_rol', 2)->first();
+        $rol = Rol::where('id_rol', $request->rol_id)->first();
         $usuario->roles()->attach($rol);
 
         toast('Usuario registrado con éxito!', 'success')->width(250);
@@ -87,8 +92,9 @@ class UserController extends Controller
      */
     public function edit($id_user)
     {
-        $user = user::where('id_user', $id_user)->first();
-        return view('admin.usuarios.modificar', compact('user'));
+        $user  = User::where('id_user', $id_user)->first();
+        $roles = Rol::orderBy('rol')->where('id_rol','!=',$user->roles['0']->id_rol)->get();
+        return view('admin.usuarios.modificar', compact('user', 'roles'));
     }
 
     /**
@@ -101,9 +107,9 @@ class UserController extends Controller
     public function update(Request $request, $id_user)
     {
         $request->validate([
-            'nombre'               => 'required|string|max:50',
-            'telefono_principal'   => 'required|string|max:15',
-            'correo'               => 'required|email|max:50'
+            'nombre'               => 'required|string|max:80',
+            'telefono'             => 'required|string|max:15',
+            'password'             => ['confirmed', Rules\Password::defaults()],
         ]);
 
         $autorizacion_correo = 0;
@@ -112,27 +118,23 @@ class UserController extends Controller
             $autorizacion_correo = 1;
         }
 
-        if($request->input('cambiar_password') == "on"){
+        if ($request->input('cambiar_password') == "on") {
             $password = $request->input('password');
-        }else{
-            $user_pass = user::where('id_user', $id_user)->first();
+        } else {
+            $user_pass = User::where('id_user', $id_user)->first();
             $password = $user_pass->password;
         }
 
-        user::where('id_user', $id_user)->update([
-            'nombre'                => $request->input('nombre'),
-            'direccion'             => $request->input('direccion'),
-            'telefono_principal'    => $request->input('telefono_principal'),
-            'telefono_secundario'   => $request->input('telefono_secundario'),
-            'correo'                => $request->input('correo'),
-            'password'              => $password,
+        User::where('id_user', $id_user)->update([
+            'nombre'                => $request->nombre,
+            'telefono'              => $request->telefono,
+            'email'                 => $request->email,
+            'password'              => Hash::make($password),
             'autorizacion_correo'   => $autorizacion_correo
         ]);
 
-        User::where('user_id', $id_user)->update([
-            'nombre'                => 'Cristhiaaaaaaaaaa',
-            'correo'                => $request->input('correo'),
-            'password'              => bcrypt($password)
+        RolUser::where('user_id', $id_user)->update([
+            'rol_id'                => $request->rol_id,
         ]);
 
         toast('Usuario modificado con éxito!', 'success')->width(250);
@@ -147,9 +149,23 @@ class UserController extends Controller
      */
     public function destroy($id_user)
     {
-        User::where('id_user',$id_user)->delete();
+        User::where('id_user', $id_user)->delete();
         toast('Usuario eliminado con éxito!', 'info')->width(250);
         return redirect(route('user.index'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function user_gestionar_permisos()
+    {
+        $roles = Rol::orderBy('id_rol', 'asc')->get();
+
+        $modulos_roles = ModuloRol::get();
+        return view('admin.usuarios.gestionar_permisos', compact('roles', 'modulos_roles'));
     }
 
     /* Validación para buscar Cliete formación */

@@ -40,20 +40,21 @@ class RegisteredUserController extends Controller
         }
 
         $request->validate([
-            'nombre'               => 'required|string|max:255',
-            'email'                => 'required|string|email|max:255|unique:users',
+            'nombre'               => 'required|string|max:80',
+            'telefono'             => 'required|string|max:15',
+            'email'                => 'required|string|email|max:50|unique:users',
             'password'             => ['required', 'confirmed', Rules\Password::defaults()],
-            'autorizacion_correo'  => 'required',
         ]);
 
         $user = User::create([
             'nombre'               => $request->nombre,
+            'telefono'             => $request->telefono,
             'email'                => $request->email,
             'password'             => Hash::make($request->password),
             'autorizacion_correo'  => $autorizacion_correo,
         ]);
-
-        $rol = Rol::where('id_rol', 2)->first();
+        /*el id 3 es : cliente*/
+        $rol = Rol::where('id_rol', 3)->first();
         $user->roles()->attach($rol);
 
         event(new Registered($user));

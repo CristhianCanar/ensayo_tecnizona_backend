@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="form-row justify-content-center">
                         <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Nombres</label>
+                            <label class="form-label" for="text">Nombre</label>
                             <h5>{{ $user->nombre }}</h5>
                         </div>
 
@@ -40,9 +40,16 @@
                         </div>
 
                         <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text"> Correo</label>
-                            <h5>{{  $user->correo }}</h5>
+                            <label class="form-label" for="text"> Rol</label>
+                            <h5>{{  $user->roles['0']->rol }}</h5>
                         </div>
+
+                        <div class="form-group col-10 col-lg-8">
+                            <label class="form-label" for="text"> Correo</label>
+                            <h5>{{  $user->email }}</h5>
+                        </div>
+
+
 
                         @if ($user->autorizacion_correo == 1)
                             <div class="form-group col-10 col-lg-8 custom-control custom-checkbox" style="cursor: context-menu">

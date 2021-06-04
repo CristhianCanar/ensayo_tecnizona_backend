@@ -14,7 +14,19 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        /* Poblar los datos de la base de datos con la api
+        $productos = Producto::orderBy('id_producto', 'desc')->paginate(50);
+
+        return view('admin.productos.gestionar', compact('productos'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function cargar_productos()
+    {
+        /* Poblar los datos de la base de datos con la api*/
         $catalogo = $this->client->request(
             'GET',
             'api/WebApi/GetConsultarCatalogo',
@@ -49,10 +61,9 @@ class ProductoController extends Controller
 
             ]);
         }
-        */
-        $productos = Producto::orderBy('id_producto', 'desc')->paginate(50);
 
-        return view('admin.productos.gestionar', compact('productos'));
+        toast('Productos cargados con éxito!', 'success')->width(250);
+        return redirect(route('producto.index'));
     }
 
     /**

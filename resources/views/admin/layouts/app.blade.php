@@ -18,6 +18,10 @@
 	<script src="{{ asset('atlantis/assets/js/atlantis.min.js') }}"></script>
     <!-- Chart Circle -->
 	<script src="{{asset('atlantis/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
+    <!-- Chart JS-->
+	<script src="{{asset('atlantis/assets/js/plugin/chart.js/chart.min.js')}}"></script>
+    <!-- Sparkline -->
+	<script src="{{asset('atlantis/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
 
 	<script src="{{ asset('js/admin.js') }}"></script>
 	<!-- Fonts and icons -->
@@ -101,27 +105,9 @@
 											<div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
 											<div class="notif-content">
 												<span class="block">
-													New user registered
+													Nuevos usuarios registrados
 												</span>
-												<span class="time">5 minutes ago</span>
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Rahmad commented on Admin
-												</span>
-												<span class="time">12 minutes ago</span>
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Farrah liked Admin
-												</span>
-												<span class="time">17 minutes ago</span>
+												<span class="time">Hace 5 minutos</span>
 											</div>
 										</a>
 									</div>
@@ -206,7 +192,7 @@
 						<li class="nav-item @if(request()->routeIs('home')) active @endif"  >
 							<a href="{{ route('home') }}" >
 								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
+								<p>Tablero</p>
 							</a>
 						</li>
 						<li class="nav-section">
@@ -215,42 +201,52 @@
 							</span>
 							<h4 class="text-section">Modulos</h4>
 						</li>
-						<li class="nav-item @if(request()->routeIs('user.index') || request()->routeIs('user.create')) active submenu @endif">
+						<li class="nav-item @if(request()->routeIs('user.index', 'user.create', 'user.show', 'user.edit', 'user_gestionar_permisos')) active submenu @endif">
 							<a data-toggle="collapse" href="#usuarios">
 								<i class="la flaticon-user-5"></i>
 								<p>Usuarios</p>
 								<span class="caret"></span>
 							</a>
-							<div class="collapse @if(request()->routeIs('user.index') || request()->routeIs('user.create')) show @endif" id="usuarios">
+							<div class="collapse @if(request()->routeIs('user.index', 'user.create', 'user.show', 'user.edit', 'user_gestionar_permisos')) show @endif" id="usuarios">
 								<ul class="nav nav-collapse">
 									<li class="@if(request()->routeIs('user.create')) active @endif">
 										<a href="{{ route('user.create') }}">
 											<span class="sub-item">Registrar Usuario</span>
 										</a>
 									</li>
-									<li class="@if(request()->routeIs('user.index')) active @endif">
+									<li class="@if(request()->routeIs('user.index', 'user.show', 'user.edit')) active @endif">
 										<a href="{{ route('user.index') }}">
 											<span class="sub-item">Gestionar Usuarios</span>
+										</a>
+									</li>
+									<li class="@if(request()->routeIs('user_gestionar_permisos')) active @endif">
+										<a href="{{ route('user_gestionar_permisos') }}">
+											<span class="sub-item">Gestionar Permisos</span>
 										</a>
 									</li>
 								</ul>
 							</div>
 						</li>
 
-                        <li class="nav-item @if(request()->routeIs('producto.index') || request()->routeIs('producto.create')) active submenu @endif">
+                        <li class="nav-item @if(request()->routeIs('producto.index', 'producto.create', 'producto.show', 'producto.edit')) active submenu @endif">
 							<a data-toggle="collapse" href="#productos">
 								<i class="la flaticon-box-1"></i>
 								<p>Productos</p>
 								<span class="caret"></span>
 							</a>
-							<div class="collapse @if(request()->routeIs('producto.index') || request()->routeIs('producto.create')) show @endif" id="productos">
+							<div class="collapse @if(request()->routeIs('producto.index', 'producto.create', 'producto.show', 'producto.edit', 'cargar_productos')) show @endif" id="productos">
 								<ul class="nav nav-collapse">
+                                    <li class="@if(request()->routeIs('cargar_productos')) active @endif">
+										<a href="{{ route('cargar_productos') }}"  onclick="return confirm('Seguro que desea cargar todos los productos de inventario? Esta acción no tiene reversa.')">
+											<span class="sub-item">Cargar Productos</span>
+										</a>
+									</li>
 									<li class="@if(request()->routeIs('producto.create')) active @endif">
 										<a href="{{ route('producto.create') }}">
 											<span class="sub-item">Registrar Producto</span>
 										</a>
 									</li>
-									<li class="@if(request()->routeIs('producto.index')) active @endif">
+									<li class="@if(request()->routeIs('producto.index', 'producto.show', 'producto.edit')) active @endif">
 										<a href="{{ route('producto.index') }}">
 											<span class="sub-item">Gestionar Productos</span>
 										</a>
@@ -259,13 +255,13 @@
 							</div>
 						</li>
 
-                        <li class="nav-item @if(request()->routeIs('pedido.index') || request()->routeIs('pedido.create')) active submenu @endif">
+                        <li class="nav-item @if(request()->routeIs('pedido.index','pedido.create', 'pedido.show', 'pedido.edit')) active submenu @endif">
 							<a data-toggle="collapse" href="#pedidos">
 								<i class="la flaticon-cart"></i>
 								<p>Pedidos</p>
 								<span class="caret"></span>
 							</a>
-							<div class="collapse @if(request()->routeIs('pedido.index') || request()->routeIs('pedido.create')) show @endif" id="pedidos">
+							<div class="collapse @if(request()->routeIs('pedido.index', 'pedido.create', 'pedido.show', 'pedido.edit')) show @endif" id="pedidos">
 								<ul class="nav nav-collapse">
 									<li class="@if(request()->routeIs('pedido.create')) active @endif">
 										<a href="{{ route('pedido.create') }}">

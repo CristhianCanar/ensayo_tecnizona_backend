@@ -26,6 +26,7 @@
                             <tr>
                                 <th style="max-width: 60px;">#</th>
                                 <th scope="col">Nombre</th>
+                                <th scope="col">Teléfono</th>
                                 <th scope="col">Correo</th>
                                 <th class="text-right" >Acciones</th>
                             </tr>
@@ -35,6 +36,7 @@
                                 <tr>
                                     <th scope="row" style="max-width: 60px;">{{ $loop->iteration }}</th>
                                     <td class="text-truncate" style="max-width: 300px;">{{ $user->nombre }}</td>
+                                    <td class="text-truncate" style="max-width: 300px;">{{ $user->telefono }}</td>
                                     <td class="text-truncate" style="max-width: 150px;">{{ $user->email }}</td>
                                     <td class="">
                                         <div class="row float-right" style="font-size: 20px">

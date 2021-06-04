@@ -21,6 +21,13 @@
 
             <!-- Correo Electronico -->
             <div class="mt-4">
+                <x-label for="telefono" :value="__('Teléfono')" />
+
+                <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required autofocus />
+            </div>
+
+            <!-- Correo Electronico -->
+            <div class="mt-4">
                 <x-label for="email" :value="__('Correo')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />

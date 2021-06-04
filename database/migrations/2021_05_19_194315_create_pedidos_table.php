@@ -15,6 +15,7 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->bigIncrements('id_pedido');
+            $table->unsignedInteger('user_id');/*id del usuario logeado quien realiza el pedido*/
             $table->string('AccountNum', '30');/*NIT cliente*/
             $table->string('NombreClienteEntrega', '150');/*Nombre del cliente al cual se va a entregar el producto*/
             $table->string('ClienteEntrega', '80');/*Identificacion del cliente de entrega */
@@ -30,6 +31,12 @@ class CreatePedidosTable extends Migration
             $table->text('Observaciones')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id_user')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

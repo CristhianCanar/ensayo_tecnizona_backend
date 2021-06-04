@@ -48,30 +48,80 @@
 
                                     <div class="form-group col-10 col-lg-8">
                                         <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Rol</label>
-                                        <input type="text" class="form-control" name="rol" id="rol"
-                                            placeholder="Ej: Administrador" maxlength="25" required>
-                                    </div>
-
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Correo</label>
-                                        <input type="email" class="form-control" name="correo" id="correo"
-                                            value="{{ old('correo') }}" placeholder="Ej: juan.ortega@gmail.com"
-                                            maxlength="50" autocomplete="new-text" required>
-                                        @error('correo')
+                                                title="Campo Obligatorio">*</span> Teléfono</label>
+                                        <input type="text" class="form-control" name="telefono" id="telefono"
+                                            value="{{ old('telefono') }}" placeholder="Ej: 3221234565" maxlength="15"
+                                            required>
+                                        @error('telefono')
                                             <div class="invalid-feedback">
-                                                El correo no cumple con las características mínimas
+                                                El teléfono no cumple con las características mínimas
                                             </div>
                                         @enderror
                                     </div>
 
                                     <div class="form-group col-10 col-lg-8">
                                         <label class="form-label" for="text"><span data-toggle="tooltip"
+                                                title="Campo Obligatorio">*</span> Rol</label>
+                                        <select class="custom-select" name="rol_id" id="rol_id" autofocus required>
+                                            <option value="" selected disabled>Seleccione Rol</option>
+                                            @foreach ($roles as $rol)
+                                                <option value="{{ $rol->id_rol }}">{{ $rol->rol }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-10 col-lg-8">
+                                        <label class="form-label" for="text"><span data-toggle="tooltip"
+                                                title="Campo Obligatorio">*</span> Correo</label>
+                                        <input type="email" class="form-control" name="email" id="email"
+                                            value="{{ old('email') }}" placeholder="Ej: juan.ortega@gmail.com"
+                                            maxlength="50" autocomplete="new-text" required>
+                                        @error('email') 
+                                            <div class="invalid-feedback">
+                                                El correo no cumple con las características mínimas
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Contraseña -->
+                                    <div class="form-group col-10 col-lg-8">
+                                        <label class="form-label" for="text"><span data-toggle="tooltip"
                                                 title="Campo Obligatorio">*</span> Contraseña</label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                            name="password" id="password" maxlength="50" autocomplete="new-password"
-                                            required>
+                                        <div class="input-group">
+                                            <input type="password"
+                                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                                id="password" maxlength="50" autocomplete="new-password">
+                                            @error('password')
+                                                <div class="invalid-feedback">
+                                                    Contraseña minimo de 8 carácteres
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-10 col-lg-8">
+                                        <label class="form-label" for="text"><span data-toggle="tooltip"
+                                                title="Campo Obligatorio">*</span> Confirmar Contraseña</label>
+                                        <div class="input-group">
+                                            <input type="password"
+                                                class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation"
+                                                id="password_confirmation" maxlength="50" autocomplete="new-password" required>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-eye-slash color-azul" id="mostrar-password"></i>
+                                                </div>
+                                            </div>
+                                            @error('password_confirmation')
+                                                <div class="invalid-feedback">
+                                                    Contraseña minimo de 8 carácteres
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-10 col-lg-8 custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input " id="autorizacion_correo" name="autorizacion_correo">
+                                        <label class="custom-control-label float-left ml-3" for="autorizacion_correo">Inscribir en la lista de correos</label>
                                     </div>
 
                                     <div class="form-group col-10 col-lg-8 mt-3">

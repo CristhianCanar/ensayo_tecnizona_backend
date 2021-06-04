@@ -17,9 +17,6 @@ class CreateUsersTable extends Migration
             $table->integerIncrements('id_user');
             $table->string('nombre','80');
             $table->string('telefono','15');
-            /* $table->string('apellidos','50');
-            *Crear path de imagen
-            */
             $table->string('email','50')->unique();
             $table->string('password','100');
             $table->boolean('autorizacion_correo');

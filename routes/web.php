@@ -17,12 +17,12 @@ Route::get('/', function () {
     return redirect(route('login'));
 });
 
-Route::get('/home', function () {
-    return view('admin.dashboard.dashboard');
-})->middleware(['auth'])->name('home');
+Route::get('/home', 'HomeAuthController@index')->name('home')->middleware('auth');
 
 Route::resource('producto', ProductoController::class)->middleware(['auth']);
+Route::get('cargar_productos', 'ProductoController@cargar_productos')->name('cargar_productos')->middleware(['auth']);
 Route::resource('user', UserController::class)->middleware(['auth']);
+Route::get('user_gestionar_permisos', 'UserController@user_gestionar_permisos')->name('user_gestionar_permisos')->middleware(['auth']);
 Route::resource('pedido', PedidoController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';
