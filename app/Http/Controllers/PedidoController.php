@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departamento;
+use App\Models\Municipio;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
 
@@ -14,43 +16,6 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        /* Poblar los datos de la base de datos con la api
-        $catalogo = $this->client->request(
-            'GET',
-            'api/WebApi/GetConsultarCatalogo',
-            [
-                'headers' =>
-                [
-                    'Authorization' => "Bearer {$this->token_acceso_mps}"
-                ]
-            ]
-        )->getBody();
-
-        $productos = json_decode($catalogo, true);
-
-        foreach ($productos as $producto){
-            Produto::create([
-                'PartNum'                 => $producto['PartNum'],
-                'Familia'                 => $producto['Familia'],
-                'Categoria'               => $producto['Categoria'],
-                'Name'                    => $producto['Name'],
-                'Description'             => $producto['Description'],
-                'Marks'                   => $producto['Marks'],
-                'Salesminprice'           => $producto['Salesminprice'],
-                'Salesmaxprice'           => $producto['Salesmaxprice'],
-                'precio'                  => $producto['precio'],
-                'CurrencyDef'             => $producto['CurrencyDef'],
-                'Quantity'                => $producto['Quantity'],
-                'TributariClassification' => $producto['TributariClassification'],
-                'NombreImagen'            => $producto['NombreImagen'],
-                'Descuento'               => $producto['Descuento'],
-                'shipping'                => $producto['shipping'],
-                'Sku'                     => $producto['Sku'],
-
-            ]);
-        }
-        */
-
         $pedidos = Pedido::orderBy('id_producto', 'desc')->paginate(50);
 
         return view('admin.pedidos.gestionar', compact('pedidos'));
@@ -63,7 +28,8 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        return view('admin.pedidos.registrar');
+        $departamentos = Departamento::orderBy('departamento')->get();
+        return view('admin.pedidos.registrar', compact('departamentos'));
     }
 
     /**
@@ -227,6 +193,13 @@ class PedidoController extends Controller
             return response()->json(
                 $this->estructuraApi->toResponse($productos)
             );
+        }
+    }
+
+    public function get_municipios($id_departamento){
+        $municipios = Municipio::where('departamento_id',$id_departamento)->get();
+        foreach ($municipios as $municipio) {
+            echo "<option value='{$municipio->id_municipio}'>{$municipio->municipio}</option>";
         }
     }
 }

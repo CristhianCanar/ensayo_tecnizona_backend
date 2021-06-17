@@ -25,172 +25,439 @@
             </ul>
         </div>
         <div class="row justify-content-center">
-            <div class="col-10 col-lg-8">
+            <div class="col-12 col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row justify-content-center">
-                            <form class="needs-validation" method="POST" action="{{ route('pedido.store') }}"
-                                novalidate>
-                                @csrf
-                                <div class="form-row justify-content-center">
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> NIT Cliente</label>
-                                        <input type="text" class="form-control @error('AccountNum') is-invalid @enderror"
-                                            name="AccountNum" id="AccountNum" value="{{ old('AccountNum') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('AccountNum')
-                                            <div class="invalid-feedback">
-                                                El NIT Cliente no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                        <form class="needs-validation" method="POST" action="{{ route('pedido.store') }}" novalidate>
+                            @csrf
+                            <div class="form-row justify-content-center">
+                                <div class="form-group col-10 col-lg-8">
+                                    <h1>Información Cliente</h1>
+                                </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label class="form-label" for="text"><span data-toggle="tooltip"
+                                            title="Campo Obligatorio">*</span> NIT Cliente</label>
+                                    <input type="text" class="form-control @error('AccountNum') is-invalid @enderror"
+                                        name="AccountNum" id="AccountNum" value="{{ old('AccountNum') }}"
+                                        placeholder="12345678-9" maxlength="30" required>
+                                    @error('AccountNum')
+                                        <div class="invalid-feedback">
+                                            El NIT Cliente no cumple con las características mínimas
+                                        </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Nombre Cliente Entrega</label>
-                                        <input type="text" class="form-control @error('NombreClienteEntrega') is-invalid @enderror"
-                                            name="NombreClienteEntrega" id="NombreClienteEntrega" value="{{ old('NombreClienteEntrega') }}"
-                                            placeholder="12345678-9" maxlength="100" required>
-                                        @error('NombreClienteEntrega')
-                                            <div class="invalid-feedback">
-                                                El NombreClienteEntrega no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label class="form-label" for="text"><span data-toggle="tooltip"
+                                            title="Campo Obligatorio">*</span> Nombre Cliente Entrega</label>
+                                    <input type="text"
+                                        class="form-control @error('NombreClienteEntrega') is-invalid @enderror"
+                                        name="NombreClienteEntrega" id="NombreClienteEntrega"
+                                        value="{{ old('NombreClienteEntrega') }}" placeholder="Juan Perez"
+                                        maxlength="100" required>
+                                    @error('NombreClienteEntrega')
+                                        <div class="invalid-feedback">
+                                            El Nombre Cliente Entrega no cumple con las características mínimas
+                                        </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Indentificacion Cliente Entrega</label>
-                                        <input type="text" class="form-control @error('ClienteEntrega') is-invalid @enderror"
-                                            name="ClienteEntrega" id="ClienteEntrega" value="{{ old('ClienteEntrega') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('ClienteEntrega')
-                                            <div class="invalid-feedback">
-                                                El ClienteEntrega no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label class="form-label" for="text"><span data-toggle="tooltip"
+                                            title="Campo Obligatorio">*</span> Indentificacion Cliente Entrega</label>
+                                    <input type="text"
+                                        class="form-control @error('ClienteEntrega') is-invalid @enderror"
+                                        name="ClienteEntrega" id="ClienteEntrega" value="{{ old('ClienteEntrega') }}"
+                                        placeholder="1061812345" maxlength="12" required>
+                                    @error('ClienteEntrega')
+                                        <div class="invalid-feedback">
+                                            El Cliente Entrega no cumple con las características mínimas
+                                        </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Telefono Entrega</label>
-                                        <input type="text" class="form-control @error('TelefonoEntrega') is-invalid @enderror"
-                                            name="TelefonoEntrega" id="TelefonoEntrega" value="{{ old('TelefonoEntrega') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('TelefonoEntrega')
-                                            <div class="invalid-feedback">
-                                                El TelefonoEntrega no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label class="form-label" for="text"><span data-toggle="tooltip"
+                                            title="Campo Obligatorio">*</span> Telefono Entrega</label>
+                                    <input type="text"
+                                        class="form-control @error('TelefonoEntrega') is-invalid @enderror"
+                                        name="TelefonoEntrega" id="TelefonoEntrega"
+                                        value="{{ old('TelefonoEntrega') }}" placeholder="3221234567" maxlength="15"
+                                        required>
+                                    @error('TelefonoEntrega')
+                                        <div class="invalid-feedback">
+                                            El Telefono Entrega no cumple con las características mínimas
+                                        </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Direccion Entrega</label>
-                                        <input type="text" class="form-control @error('DireccionEntrega') is-invalid @enderror"
-                                            name="DireccionEntrega" id="DireccionEntrega" value="{{ old('DireccionEntrega') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('DireccionEntrega')
-                                            <div class="invalid-feedback">
-                                                El DireccionEntrega no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label for="StateId" class="form-label"><span class="obligatorio"
+                                            data-toggle="tooltip" title="Campo Obligatorio">*</span>
+                                        Departamento</label>
+                                    <select id="StateId" name="StateId"
+                                        class="custom-select @error('StateId') is-invalid @enderror" autofocus required>
+                                        <option value="" selected disabled>Seleccione Departamento</option>
+                                        @foreach ($departamentos as $departamento)
+                                            <option value="{{ $departamento->id_departamento }}">
+                                                {{ $departamento->departamento }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('StateId')
+                                        <div class="invalid-feedback">
+                                            Selecciona un Departamento
+                                        </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Direccion Entrega</label>
-                                        <input type="text" class="form-control @error('DireccionEntrega') is-invalid @enderror"
-                                            name="DireccionEntrega" id="DireccionEntrega" value="{{ old('DireccionEntrega') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('DireccionEntrega')
-                                            <div class="invalid-feedback">
-                                                El DireccionEntrega no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label for="CountyId" class="form-label"><span class="obligatorio"
+                                            data-toggle="tooltip" title="Campo Obligatorio">*</span> Municipio</label>
+                                    <select class="custom-select" name="CountyId" id="CountyId" required
+                                        src="{{ route('pedido.getmunicipio', '#') }}">
+                                        <option value="" selected disabled>Seleccione Municipio</option>
+                                    </select>
+                                    @error('CountyId')
+                                        <div class="invalid-feedback">
+                                            Selecciona un Municipio
+                                        </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Direccion Entrega</label>
-                                        <input type="text" class="form-control @error('DireccionEntrega') is-invalid @enderror"
-                                            name="DireccionEntrega" id="DireccionEntrega" value="{{ old('DireccionEntrega') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('DireccionEntrega')
-                                            <div class="invalid-feedback">
-                                                El DireccionEntrega no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label class="form-label" for="text"><span data-toggle="tooltip"
+                                            title="Campo Obligatorio">*</span> Direccion Entrega</label>
+                                    <input type="text"
+                                        class="form-control @error('DireccionEntrega') is-invalid @enderror"
+                                        name="DireccionEntrega" id="DireccionEntrega"
+                                        value="{{ old('DireccionEntrega') }}"
+                                        placeholder="Calle 9 # 1-23 Barrio Nuevo" maxlength="30" required>
+                                    @error('DireccionEntrega')
+                                        <div class="invalid-feedback">
+                                            El Direccion Entrega no cumple con las características mínimas
+                                        </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Direccion Entrega</label>
-                                        <input type="text" class="form-control @error('DireccionEntrega') is-invalid @enderror"
-                                            name="DireccionEntrega" id="DireccionEntrega" value="{{ old('DireccionEntrega') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('DireccionEntrega')
-                                            <div class="invalid-feedback">
-                                                El DireccionEntrega no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label class="form-label" for="text"><span data-toggle="tooltip"
+                                            title="Campo Obligatorio">*</span>Recoge en el sitio</label>
+                                    <select class="form-control" name="RecogerEnSitio">
+                                        <option value="1" selected>Si</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Codigo Deparatamento segun DANE</label>
-                                        <input type="text" class="form-control @error('StateId') is-invalid @enderror"
-                                            name="StateId" id="StateId" value="{{ old('StateId') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('StateId')
-                                            <div class="invalid-feedback">
-                                                El StateId no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-10 col-lg-8">
+                                    <label class="form-label" for="text"><span data-toggle="tooltip"
+                                            title="Campo Obligatorio">*</span>Entrega Usuario Final</label>
+                                    <select class="form-control" name="EntregaUsuarioFinal">
+                                        <option value="1" selected>Si</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                                title="Campo Obligatorio">*</span> Codigo Municipio segun DANE</label>
-                                        <input type="text" class="form-control @error('CountyId') is-invalid @enderror"
-                                            name="CountyId" id="CountyId" value="{{ old('CountyId') }}"
-                                            placeholder="12345678-9" maxlength="30" required>
-                                        @error('CountyId')
-                                            <div class="invalid-feedback">
-                                                El CountyId no cumple con las características mínimas
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                        title="Campo Obligatorio">*</span>Recoge en el sitio</label>
-                                        <select class="form-control" name="RecogerEnSitio">
-                                            <option value="1" selected>Si</option>
-                                            <option value="0">No</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-10 col-lg-8">
-                                        <label class="form-label" for="text"><span data-toggle="tooltip"
-                                        title="Campo Obligatorio">*</span>Entrega Usuario Final</label>
-                                        <select class="form-control" name="EntregaUsuarioFinal">
-                                            <option value="1" selected>Si</option>
-                                            <option value="0">No</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-10 col-lg-8 mt-3">
-                                        <button class="btn btn-success w-100" type="submit"><i class="fa fa-check"></i>
-                                            Registrar</button>
+                            <div class="form-row text-center align-items-center mt-4">
+                                <div class="col-6 float-left">
+                                    <h1>Productos</h1>
+                                </div>
+                                <div class="col-5">
+                                    <div class="row align-items-center">
+                                        <div class="col-9 p-0">
+                                            <input type="text" class="form-control form-control-sm" id="buscar_producto" placeholder="Escriba codigo ref.">
+                                        </div>
+                                        <div class="col-1 p-0 ml-2">
+                                            <a style="color: #fa8c15;" onclick="buscar_producto( '{{route('buscar_producto')}}')">
+                                                <i class="fa fa-search search-icon" data-toggle="tooltip"
+                                                    title="Buscar producto"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+
+                            <div class="form-row text-center mt-4">
+                                <div class="col-12">
+                                    <h4>Lista de productos similares</h4>
+                                </div>
+                            </div>
+                            <div class="form-row justify-content-center">
+                                <div class="form-group" id="contenedor_res_buscador">
+                                </div>
+                            </div>
+
+                            <div class="form-row justify-content-center">
+                                <div class="form-group table-responsive">
+                                    <table class="table table-hover">
+                                        <thead id="thead_buscador">
+
+                                        </thead>
+                                        <tbody id="tbody_buscador">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="form-row text-center mt-4">
+                                <div class="col-12">
+                                    <h4>Mi pedido</h4>
+                                </div>
+                            </div>
+
+                            <div class="form-row justify-content-center">
+                                <div class="form-group table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="max-width: 60px;">#</th>
+                                                <th scope="col">Referencia</th>
+                                                <th scope="col">Nombre</th>
+                                                <th class="text-center">Cantidad</th>
+                                                <th scope="col">Precio</th>
+                                                <th class="text-right">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_pedido">
+                                            <tr>
+                                                <th scope="row" style="max-width: 60px;">1</th>
+                                                <td class="text-truncate" style="max-width: 150px;">REF123</td>
+                                                <td class="text-truncate" style="max-width: 100px;">acer</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <input type="number" class="form-control form-control-sm" id="cantidad" placeholder="1" min="1" max="20" value="1">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-truncate" >$ 2.000.000</td>
+                                                <td class="">
+                                                    <div class="row justify-content-end" style="font-size: 20px">
+                                                        <div class="col-3">
+                                                            <a href="" style="color: #fa8c15;">
+                                                                <i class="la icon-eye" data-toggle="tooltip"
+                                                                    title="Ver producto"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <a href="" style="color: #f44336;">
+                                                                <i class="la icon-trash" data-toggle="tooltip"
+                                                                    title="Eliminar producto"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <th>Subtotal</th>
+                                                <td class="p-0 m-0 text-right" style="max-width: 150px; width:200px;">$ 1'200.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <th>Total</th>
+                                                <td class="p-0 m-0 text-right" style="max-width: 150px; width:200px;">$ 1'200.000</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="form-row justify-content-center">
+                                <div class="form-group col-10 col-lg-8 mt-3">
+                                    <button class="btn btn-success w-100" type="submit"><i class="fa fa-check"></i>
+                                        Registrar</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        // FUNCION PARA VER LOS ERRORES DE LAS CONSULTAS MEDIANTE AJAX
+        function imprimirError(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 0) {
 
+                console.log('Not connect: Verify Network.');
+
+            } else if (jqXHR.status == 404) {
+
+                console.log('Requested page not found [404]');
+
+            } else if (jqXHR.status == 500) {
+
+                console.log('Internal Server Error [500].');
+
+            } else if (textStatus === 'parsererror') {
+
+                console.log('Requested JSON parse failed.');
+
+            } else if (textStatus === 'timeout') {
+
+                console.log('Time out error.');
+
+            } else if (textStatus === 'abort') {
+
+                console.log('Ajax request aborted.');
+
+            } else {
+
+                console.log('Uncaught Error: ' + jqXHR.responseText);
+
+            }
+        }
+
+        window.addEventListener('load',function(){
+            document.getElementById("buscar_producto").addEventListener("keyup", () => {
+                var contenedor_tbody        = document.getElementById("tbody_buscador");
+                var contenedor_thead        = document.getElementById("thead_buscador");
+                var contenedor_res_buscador = document.getElementById("contenedor_res_buscador");
+                if((document.getElementById("buscar_producto").value.length) < 1)
+                {
+                    contenedor_tbody.innerHTML        = "";
+                    contenedor_thead.innerHTML        = "";
+                    contenedor_res_buscador.innerHTML = '<h3>Productos no encontrados</h3>';
+
+                }
+            })
+        });
+
+        function buscar_producto(url){
+            var token = $('input[name=_token]').val();
+            var ref_producto = document.getElementById('buscar_producto').value;
+            var contenedor_tbody = document.getElementById("tbody_buscador");
+            var contenedor_thead = document.getElementById("thead_buscador");
+            var contenedor_res_buscador = document.getElementById("contenedor_res_buscador");
+            contenedor_thead.innerHTML = "";
+            contenedor_tbody.innerHTML = "";
+            if(ref_producto != null){
+                $.ajax({
+                    type:'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    url:url,
+                    dataType:'json',
+                    data:{ref_producto:ref_producto},
+                    success: function(respuesta){
+                        if(respuesta.length != 0){
+                            contenedor_res_buscador.innerHTML = "";
+                            thead = '<tr>'+
+                                        '<th scope="col">Referencia</th>'+
+                                        '<th scope="col">Nombre</th>'+
+                                        '<th scope="col">Precio</th>'+
+                                        '<th class="text-center">Acciones</th>'+
+                                    '</tr>';
+                            contenedor_thead.innerHTML += thead;
+
+                            for(var i=0; i<respuesta.length; i++ ){
+                                var part_num = String("'"+respuesta[i]['PartNum']+"'");
+                                var name     = String("'"+respuesta[i]['Name']+"'");
+                                var precio   = String("'"+respuesta[i]['precio']+"'");
+                                tx ='<tr>'+
+                                        '<td>'+respuesta[i]['PartNum']+'</td>'+
+                                        '<td class="text-truncate" style="max-width: 150px;">'+respuesta[i]['Name']+'</td>'+
+                                        '<td class="text-truncate"> $ '+respuesta[i]['precio']+'</td>'+
+                                        '<td class="">'+
+                                            '<div class="row justify-content-center" style="font-size: 20px">'+
+                                                '<div class="col-3">'+
+                                                    '<a style="color: #2BB930;" onclick="agregar_producto('+part_num+','+name+','+precio+')">'+
+                                                        '<i class="fas fa-plus" data-toggle="tooltip" title="Agregar producto a mi pedido"></i>'+
+                                                    '</a>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</td>'+
+                                    '</tr>';
+                                contenedor_tbody.innerHTML += tx;
+                            }
+                            console.log(respuesta);
+                        }else{
+                            contenedor_thead.innerHTML = "";
+                            contenedor_tbody.innerHTML = "";
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        imprimirError(jqXHR, textStatus, errorThrown);
+                    }
+                });
+            }
+        }
+        var contador = 0;
+        function agregar_producto(part_num, name, precio){
+            var contenedor_tbody = document.getElementById("tbody_pedido");
+            contador++;
+            console.log(part_num+name+precio+" "+contador);
+            var referencia = String("'"+part_num+"'");
+
+            tx ='<tr id='+part_num+'>'+
+                    '<th scope="row" style="max-width: 60px;">'+contador+'</th>'+
+                    '<td class="text-truncate" style="max-width: 150px;">'+part_num+'</td>'+
+                    '<td class="text-truncate" style="max-width: 100px;">'+name+'</td>'+
+                    '<td>'+
+                        '<div class="row">'+
+                            '<div class="col-12">'+
+                                '<input type="number" class="form-control form-control-sm" id="cantidad" placeholder="1" min="1" max="20" value="1">'+
+                            '</div>'+
+                        '</div>'+
+                    '</td>'+
+                    '<td class="text-truncate" name="precios_pedidos[]">$ '+precio+'</td>'+
+                    '<td class="">'+
+                        '<div class="row justify-content-end" style="font-size: 20px">'+
+                            '<div class="col-3">'+
+                                '<a href="" style="color: #fa8c15;">'+
+                                    '<i class="la icon-eye" data-toggle="tooltip" title="Ver producto"></i>'+
+                                '</a>'+
+                            '</div>'+
+                            '<div class="col-3">'+
+                                '<a href="" style="color: #f44336;">'+
+                                    '<i class="la icon-trash" data-toggle="tooltip" title="Eliminar producto" onclick="eliminar_producto('+referencia+')"></i>'+
+                                '</a>'+
+                            '</div>'+
+                        '</div>'+
+                    '</td>'+
+                '</tr>';
+
+            contenedor_tbody.innerHTML += tx;
+        }
+
+        function eliminar_producto(part_num){
+            var id = part_num;
+            el = document.getElementById(id);
+            padre = el.parentNode;
+            padre.removeChild(el);
+            event.preventDefault();
+            contador = contador - 1;
+        }
+
+
+
+    </script>
+    <script>
+        /* municipios */
+        $("#StateId").on('change', function() {
+            $("#CountyId").empty();
+
+            if ($(this).val().length == 0) {
+                return false;
+            } else {
+                $("#CountyId")
+                    .load($("#CountyId").attr('src').replace('#', $(this).val()), function() {
+                        $("#CountyId").prepend($("<option/>").attr({
+                            selected: true,
+                            disabled: true
+                        }).html('Seleccione Municipio'))
+                    });
+            }
+        });
+
+    </script>
 @endsection

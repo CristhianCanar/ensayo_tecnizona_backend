@@ -62,7 +62,7 @@ class ProductoController extends Controller
             ]);
         }
 
-        toast('Productos cargados con éxito!', 'success')->width(250);
+        alert()->success('Productos cargados con éxito!')->autoClose(5000);
         return redirect(route('producto.index'));
     }
 
@@ -238,5 +238,13 @@ class ProductoController extends Controller
                 $this->estructuraApi->toResponse($productos)
             );
         }
+    }
+
+    public function buscar_producto(Request $request){
+        $datos = $request->all();
+        $producto = Producto::select(['PartNum', 'Name', 'precio'])
+                            ->where('PartNum','like',$datos['ref_producto']."%")
+                            ->take(5)->get();
+        return $producto;
     }
 }

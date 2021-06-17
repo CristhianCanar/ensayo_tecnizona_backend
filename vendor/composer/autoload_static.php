@@ -128,6 +128,10 @@ class ComposerStaticInitc2f9d881803336aaca583b185c2feb42
             'Laravel\\Sail\\' => 13,
             'Laravel\\Breeze\\' => 15,
         ),
+        'J' => 
+        array (
+            'JeroenZwart\\CsvSeeder\\' => 22,
+        ),
         'I' => 
         array (
             'Illuminate\\Support\\' => 19,
@@ -402,6 +406,10 @@ class ComposerStaticInitc2f9d881803336aaca583b185c2feb42
         array (
             0 => __DIR__ . '/..' . '/laravel/breeze/src',
         ),
+        'JeroenZwart\\CsvSeeder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jeroenzwart/laravel-csv-seeder/src',
+        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -528,6 +536,7 @@ class ComposerStaticInitc2f9d881803336aaca583b185c2feb42
         'App\\Http\\Controllers\\Auth\\RegisteredUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisteredUserController.php',
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\HomeAuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeAuthController.php',
         'App\\Http\\Controllers\\PedidoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PedidoController.php',
         'App\\Http\\Controllers\\ProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductoController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
@@ -543,6 +552,8 @@ class ComposerStaticInitc2f9d881803336aaca583b185c2feb42
         'App\\Http\\Middleware\\Validacion' => __DIR__ . '/../..' . '/app/Http/Middleware/Validacion.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
+        'App\\Models\\Modulo' => __DIR__ . '/../..' . '/app/Models/Modulo.php',
+        'App\\Models\\ModuloRol' => __DIR__ . '/../..' . '/app/Models/ModuloRol.php',
         'App\\Models\\Pedido' => __DIR__ . '/../..' . '/app/Models/Pedido.php',
         'App\\Models\\Producto' => __DIR__ . '/../..' . '/app/Models/Producto.php',
         'App\\Models\\Rol' => __DIR__ . '/../..' . '/app/Models/Rol.php',
@@ -659,6 +670,10 @@ class ComposerStaticInitc2f9d881803336aaca583b185c2feb42
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\DepartamentosTable' => __DIR__ . '/../..' . '/database/seeders/DepartamentosTable.php',
+        'Database\\Seeders\\ModulosRolesTableSeeder' => __DIR__ . '/../..' . '/database/seeders/ModulosRolesTableSeeder.php',
+        'Database\\Seeders\\ModulosTableSeeder' => __DIR__ . '/../..' . '/database/seeders/ModulosTableSeeder.php',
+        'Database\\Seeders\\MunicipiosTable' => __DIR__ . '/../..' . '/database/seeders/MunicipiosTable.php',
         'Database\\Seeders\\RolesTableSeeder' => __DIR__ . '/../..' . '/database/seeders/RolesTableSeeder.php',
         'Database\\Seeders\\RolesUsersTableSeeder' => __DIR__ . '/../..' . '/database/seeders/RolesUsersTableSeeder.php',
         'Database\\Seeders\\UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeders/UsersTableSeeder.php',
@@ -2598,6 +2613,10 @@ class ComposerStaticInitc2f9d881803336aaca583b185c2feb42
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'JeroenZwart\\CsvSeeder\\CsvHeaderParser' => __DIR__ . '/..' . '/jeroenzwart/laravel-csv-seeder/src/CsvHeaderParser.php',
+        'JeroenZwart\\CsvSeeder\\CsvRowParser' => __DIR__ . '/..' . '/jeroenzwart/laravel-csv-seeder/src/CsvRowParser.php',
+        'JeroenZwart\\CsvSeeder\\CsvSeeder' => __DIR__ . '/..' . '/jeroenzwart/laravel-csv-seeder/src/CsvSeeder.php',
+        'JeroenZwart\\CsvSeeder\\CsvSeederServiceProvider' => __DIR__ . '/..' . '/jeroenzwart/laravel-csv-seeder/src/CsvSeederServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Laravel\\Breeze\\BreezeServiceProvider' => __DIR__ . '/..' . '/laravel/breeze/src/BreezeServiceProvider.php',
         'Laravel\\Breeze\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallCommand.php',

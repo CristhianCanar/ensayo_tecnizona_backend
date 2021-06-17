@@ -20,7 +20,7 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->estructuraApi = new EstructuraApi();
-
+/*
         $client_token = new Client();
         $respuesta = $client_token->request('POST', 'https://shopcommerce.mps.com.co:7071/Token', [
             'form_params' => [
@@ -40,6 +40,7 @@ class Controller extends BaseController
             // You can set any number of default request options.
             'timeout'  => 25.0,
         ]);
+        */
     }
 
 }

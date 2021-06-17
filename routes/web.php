@@ -21,8 +21,13 @@ Route::get('/home', 'HomeAuthController@index')->name('home')->middleware('auth'
 
 Route::resource('producto', ProductoController::class)->middleware(['auth']);
 Route::get('cargar_productos', 'ProductoController@cargar_productos')->name('cargar_productos')->middleware(['auth']);
+Route::post('producto/buscar', 'ProductoController@buscar_producto')->name('buscar_producto')->middleware(['auth']);
+
 Route::resource('user', UserController::class)->middleware(['auth']);
 Route::get('user_gestionar_permisos', 'UserController@user_gestionar_permisos')->name('user_gestionar_permisos')->middleware(['auth']);
+
 Route::resource('pedido', PedidoController::class)->middleware(['auth']);
+Route::get('pedido/getmunicipio/{id_departamento}', 'PedidoController@get_municipios')->name('pedido.getmunicipio')->middleware(['auth']);
+
 
 require __DIR__.'/auth.php';

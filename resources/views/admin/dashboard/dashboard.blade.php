@@ -143,7 +143,7 @@
             maxValue: 100,
             width: 7,
             text: 36,
-            colors: ['#f1f1f1', '#2BB930'],
+            colors: ['#f1f1f1', 'w'],
             duration: 400,
             wrpClass: 'circles-wrp',
             textClass: 'circles-text',
