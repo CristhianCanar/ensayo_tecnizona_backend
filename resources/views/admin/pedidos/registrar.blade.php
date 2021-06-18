@@ -39,7 +39,7 @@
                                             title="Campo Obligatorio">*</span> NIT Cliente</label>
                                     <input type="text" class="form-control @error('AccountNum') is-invalid @enderror"
                                         name="AccountNum" id="AccountNum" value="{{ old('AccountNum') }}"
-                                        placeholder="12345678-9" maxlength="30" required>
+                                        placeholder="12345678-9" maxlength="30" >
                                     @error('AccountNum')
                                         <div class="invalid-feedback">
                                             El NIT Cliente no cumple con las características mínimas
@@ -54,7 +54,7 @@
                                         class="form-control @error('NombreClienteEntrega') is-invalid @enderror"
                                         name="NombreClienteEntrega" id="NombreClienteEntrega"
                                         value="{{ old('NombreClienteEntrega') }}" placeholder="Juan Perez"
-                                        maxlength="100" required>
+                                        maxlength="100" >
                                     @error('NombreClienteEntrega')
                                         <div class="invalid-feedback">
                                             El Nombre Cliente Entrega no cumple con las características mínimas
@@ -68,7 +68,7 @@
                                     <input type="text"
                                         class="form-control @error('ClienteEntrega') is-invalid @enderror"
                                         name="ClienteEntrega" id="ClienteEntrega" value="{{ old('ClienteEntrega') }}"
-                                        placeholder="1061812345" maxlength="12" required>
+                                        placeholder="1061812345" maxlength="12" >
                                     @error('ClienteEntrega')
                                         <div class="invalid-feedback">
                                             El Cliente Entrega no cumple con las características mínimas
@@ -83,20 +83,19 @@
                                         class="form-control @error('TelefonoEntrega') is-invalid @enderror"
                                         name="TelefonoEntrega" id="TelefonoEntrega"
                                         value="{{ old('TelefonoEntrega') }}" placeholder="3221234567" maxlength="15"
-                                        required>
+                                        >
                                     @error('TelefonoEntrega')
                                         <div class="invalid-feedback">
                                             El Telefono Entrega no cumple con las características mínimas
                                         </div>
                                     @enderror
                                 </div>
-
                                 <div class="form-group col-10 col-lg-8">
                                     <label for="StateId" class="form-label"><span class="obligatorio"
                                             data-toggle="tooltip" title="Campo Obligatorio">*</span>
                                         Departamento</label>
                                     <select id="StateId" name="StateId"
-                                        class="custom-select @error('StateId') is-invalid @enderror" autofocus required>
+                                        class="custom-select @error('StateId') is-invalid @enderror" autofocus >
                                         <option value="" selected disabled>Seleccione Departamento</option>
                                         @foreach ($departamentos as $departamento)
                                             <option value="{{ $departamento->id_departamento }}">
@@ -113,7 +112,7 @@
                                 <div class="form-group col-10 col-lg-8">
                                     <label for="CountyId" class="form-label"><span class="obligatorio"
                                             data-toggle="tooltip" title="Campo Obligatorio">*</span> Municipio</label>
-                                    <select class="custom-select" name="CountyId" id="CountyId" required
+                                    <select class="custom-select" name="CountyId" id="CountyId"
                                         src="{{ route('pedido.getmunicipio', '#') }}">
                                         <option value="" selected disabled>Seleccione Municipio</option>
                                     </select>
@@ -131,7 +130,7 @@
                                         class="form-control @error('DireccionEntrega') is-invalid @enderror"
                                         name="DireccionEntrega" id="DireccionEntrega"
                                         value="{{ old('DireccionEntrega') }}"
-                                        placeholder="Calle 9 # 1-23 Barrio Nuevo" maxlength="30" required>
+                                        placeholder="Calle 9 # 1-23 Barrio Nuevo" maxlength="30" >
                                     @error('DireccionEntrega')
                                         <div class="invalid-feedback">
                                             El Direccion Entrega no cumple con las características mínimas
@@ -220,37 +219,10 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbody_pedido">
-                                            <tr>
-                                                <th scope="row" style="max-width: 60px;">1</th>
-                                                <td class="text-truncate" style="max-width: 150px;">REF123</td>
-                                                <td class="text-truncate" style="max-width: 100px;">acer</td>
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <input type="number" class="form-control form-control-sm" id="cantidad" placeholder="1" min="1" max="20" value="1">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-truncate" >$ 2.000.000</td>
-                                                <td class="">
-                                                    <div class="row justify-content-end" style="font-size: 20px">
-                                                        <div class="col-3">
-                                                            <a href="" style="color: #fa8c15;">
-                                                                <i class="la icon-eye" data-toggle="tooltip"
-                                                                    title="Ver producto"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <a href="" style="color: #f44336;">
-                                                                <i class="la icon-trash" data-toggle="tooltip"
-                                                                    title="Eliminar producto"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+
                                         </tbody>
                                         <tfoot>
+                                            <!--
                                             <tr>
                                                 <td></td>
                                                 <td></td>
@@ -259,13 +231,14 @@
                                                 <th>Subtotal</th>
                                                 <td class="p-0 m-0 text-right" style="max-width: 150px; width:200px;">$ 1'200.000</td>
                                             </tr>
+                                            -->
                                             <tr>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <th>Total</th>
-                                                <td class="p-0 m-0 text-right" style="max-width: 150px; width:200px;">$ 1'200.000</td>
+                                                <td class="p-0 m-0 text-right" style="max-width: 150px; width:200px;" id="tfoot_total">$ 0.00</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -391,6 +364,7 @@
                 });
             }
         }
+
         var contador = 0;
         function agregar_producto(part_num, name, precio){
             var contenedor_tbody = document.getElementById("tbody_pedido");
@@ -401,15 +375,16 @@
             tx ='<tr id='+part_num+'>'+
                     '<th scope="row" style="max-width: 60px;">'+contador+'</th>'+
                     '<td class="text-truncate" style="max-width: 150px;">'+part_num+'</td>'+
+                    '<input type="hidden" value="'+part_num+'" name="referencias_productos[]">'+
                     '<td class="text-truncate" style="max-width: 100px;">'+name+'</td>'+
                     '<td>'+
                         '<div class="row">'+
                             '<div class="col-12">'+
-                                '<input type="number" class="form-control form-control-sm" id="cantidad" placeholder="1" min="1" max="20" value="1">'+
+                                '<input type="number" class="form-control form-control-sm" id="cantidad" name="cantidades[]" placeholder="1" min="1" max="20" value="1">'+
                             '</div>'+
                         '</div>'+
                     '</td>'+
-                    '<td class="text-truncate" name="precios_pedidos[]">$ '+precio+'</td>'+
+                    '<td class="text-truncate" name="precios_productos[]">'+precio+'</td>'+
                     '<td class="">'+
                         '<div class="row justify-content-end" style="font-size: 20px">'+
                             '<div class="col-3">'+
@@ -427,6 +402,8 @@
                 '</tr>';
 
             contenedor_tbody.innerHTML += tx;
+            calcular_totales();
+
         }
 
         function eliminar_producto(part_num){
@@ -435,7 +412,17 @@
             padre = el.parentNode;
             padre.removeChild(el);
             event.preventDefault();
+            calcular_totales();
             contador = contador - 1;
+        }
+
+        function calcular_totales(){
+            var total_cantidad=0;
+            var array_total = document.getElementsByName('precios_productos[]');
+            for (var i = 0; i < array_total.length; i++) {
+                total_cantidad+=parseFloat(array_total[i].innerHTML);
+            }
+            document.getElementById('tfoot_total').innerHTML = "$ "+total_cantidad;
         }
 
 

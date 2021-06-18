@@ -204,7 +204,7 @@ class ProductoController extends Controller
         toast('Producto Actualizado con éxito!', 'success')->width(250);
         return redirect(route('producto.index'));
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
