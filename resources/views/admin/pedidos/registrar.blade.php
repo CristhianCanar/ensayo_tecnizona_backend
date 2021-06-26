@@ -36,25 +36,21 @@
                                 </div>
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
-                                            title="Campo Obligatorio">*</span> NIT Cliente</label>
-                                    <input type="text" class="form-control @error('AccountNum') is-invalid @enderror"
-                                        name="AccountNum" id="AccountNum" value="{{ old('AccountNum') }}"
-                                        placeholder="12345678-9" maxlength="30" >
-                                    @error('AccountNum')
-                                        <div class="invalid-feedback">
-                                            El NIT Cliente no cumple con las características mínimas
-                                        </div>
-                                    @enderror
+                                            title="Campo Obligatorio">*</span> NIT (Asociado)
+                                            </label>
+                                    <input class="form-control" value="79580718" disabled>
+                                    <input type="hidden" class="form-control"
+                                        name="AccountNum" id="AccountNum" value="79580718">
                                 </div>
 
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
-                                            title="Campo Obligatorio">*</span> Nombre Cliente Entrega</label>
+                                            title="Campo Obligatorio">*</span> Nombre</label>
                                     <input type="text"
                                         class="form-control @error('NombreClienteEntrega') is-invalid @enderror"
                                         name="NombreClienteEntrega" id="NombreClienteEntrega"
                                         value="{{ old('NombreClienteEntrega') }}" placeholder="Juan Perez"
-                                        maxlength="100" >
+                                        maxlength="100" autofocus >
                                     @error('NombreClienteEntrega')
                                         <div class="invalid-feedback">
                                             El Nombre Cliente Entrega no cumple con las características mínimas
@@ -64,7 +60,7 @@
 
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
-                                            title="Campo Obligatorio">*</span> Indentificacion Cliente Entrega</label>
+                                            title="Campo Obligatorio">*</span> Indentificacion (Cédula de Ciudadania, Cédula Extranjera, otro.)</label>
                                     <input type="text"
                                         class="form-control @error('ClienteEntrega') is-invalid @enderror"
                                         name="ClienteEntrega" id="ClienteEntrega" value="{{ old('ClienteEntrega') }}"
@@ -78,7 +74,7 @@
 
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
-                                            title="Campo Obligatorio">*</span> Telefono Entrega</label>
+                                            title="Campo Obligatorio">*</span> Teléfono</label>
                                     <input type="text"
                                         class="form-control @error('TelefonoEntrega') is-invalid @enderror"
                                         name="TelefonoEntrega" id="TelefonoEntrega"
@@ -90,6 +86,7 @@
                                         </div>
                                     @enderror
                                 </div>
+
                                 <div class="form-group col-10 col-lg-8">
                                     <label for="StateId" class="form-label"><span class="obligatorio"
                                             data-toggle="tooltip" title="Campo Obligatorio">*</span>
@@ -125,7 +122,7 @@
 
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
-                                            title="Campo Obligatorio">*</span> Direccion Entrega</label>
+                                            title="Campo Obligatorio">*</span> Dirección de entrega</label>
                                     <input type="text"
                                         class="form-control @error('DireccionEntrega') is-invalid @enderror"
                                         name="DireccionEntrega" id="DireccionEntrega"
@@ -140,19 +137,10 @@
 
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
-                                            title="Campo Obligatorio">*</span>Recoge en el sitio</label>
+                                            title="Campo Obligatorio">*</span> El cliente recoge el pedido en la empresa</label>
                                     <select class="form-control" name="RecogerEnSitio">
-                                        <option value="1" selected>Si</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-10 col-lg-8">
-                                    <label class="form-label" for="text"><span data-toggle="tooltip"
-                                            title="Campo Obligatorio">*</span>Entrega Usuario Final</label>
-                                    <select class="form-control" name="EntregaUsuarioFinal">
-                                        <option value="1" selected>Si</option>
-                                        <option value="0">No</option>
+                                        <option value="1">Si</option>
+                                        <option value="0" selected>No</option>
                                     </select>
                                 </div>
                             </div>

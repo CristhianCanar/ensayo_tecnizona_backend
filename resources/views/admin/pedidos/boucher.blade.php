@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-inner">
     <div class="page-header">
-        <h4 class="page-title">Ver Pedido</h4>
+        <h4 class="page-title">Ver Boucher</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="{{route('home')}}">
@@ -20,7 +20,7 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pedido.show', $pedido->id_pedido) }}">Ver Pedido</a>
+                <a href="{{ route('pedido.show', $pedido->id_pedido) }}">Ver Boucher</a>
             </li>
         </ul>
     </div>
@@ -55,7 +55,7 @@
 
                         <div class="form-group col-10 col-lg-8">
                             <label class="form-label" for="text">Descripción</label>
-                            <h5>{{ $pedido->Description }}</h5>
+                            <h5>{{ $pedido->respuesta_api_mps }}</h5>
                         </div>
 
                         <div class="form-group col-10 col-lg-8">

@@ -44,13 +44,11 @@ class PedidoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'AccountNum'                 => 'required|string|max:15',
             'NombreClienteEntrega'       => 'required|string|max:80',
             'ClienteEntrega'             => 'required|string|max:80',
             'TelefonoEntrega'            => 'required|string|max:15',
             'DireccionEntrega'           => 'required|string',
             'RecogerEnSitio'             => 'required',
-            'EntregaUsuarioFinal'        => 'required',
         ]);
 
         $productos = $request->input('referencias_productos');
@@ -60,33 +58,32 @@ class PedidoController extends Controller
             $referencia = $productos[$i];
             $producto_object = Producto::select(['PartNum', 'Name', 'Precio', 'Marks'])->where('PartNum',$referencia)->first();
             $partnum = $producto_object->PartNum;
-            $name = $producto_object->Name;
-            $precio = $producto_object->Precio;
-            $marca = $producto_object->Marks;
+            $name    = $producto_object->Name;
+            $precio  = $producto_object->Precio;
+            $marca   = $producto_object->Marks;
 
             $producto_array[$i] = ["PartNum"    => $partnum,
                                    "Name"       => $name,
                                    "Precio"     => (float)$precio,
                                    "Cantidad"   => (int)$cantidades[$i],
                                    "Marks"      => $marca,
-                                   "Bodega"     => "BELEC"];
+                                   "Bodega"     => "BCOTA"];
         }
+
         $recoger_sitio = 0;
-        $recoger_sitio_api = false;
+        $recoger_sitio_api = "false";
+        $entrega_usuario = 0;
+        $entrega_usuario_api = "false";
         if ($request->input('RecogerEnSitio') == "on") {
             $recoger_sitio = 1;
-            $recoger_sitio_api = true;
-        }
-
-        $entrega_usuario = 0;
-        $entrega_usuario_api = false;
-        if ($request->input('EntregaUsuarioFinal') == "on") {
+            $recoger_sitio_api = "true";
+        }else{
             $entrega_usuario = 1;
-            $entrega_usuario_api = true;
-
+            $entrega_usuario_api = "true";
         }
 
-        Pedido::create([
+
+        $pedido = Pedido::create([
             'user_id'                    => Auth::user()->id_user,
             'AccountNum'                 => $request->input('AccountNum'),
             'NombreClienteEntrega'       => $request->input('NombreClienteEntrega'),
@@ -101,18 +98,18 @@ class PedidoController extends Controller
 
         ]);
 
-
-        $pedido_array[0] = ["AccountNum"           => $request->input('AccountNum'),
+        $pedido_array[0] = ["AccountNum"           => "79580718",
                             "NombreClienteEntrega" => $request->input('NombreClienteEntrega'),
                             "ClienteEntrega"       => $request->input('ClienteEntrega'),
                             "TelefonoEntrega"      => $request->input('TelefonoEntrega'),
                             "StateId"              => $request->input('StateId'),
-                            "CountyId"             => $request->input('CountyId'),
+                            "CountyId"             => "001",
                             "DireccionEntrega"     => $request->input('DireccionEntrega'),
-                            "RecogerEnSitio"       => "false",
-                            "EntregaUsuarioFinal"  => "false",
+                            "RecogerEnSitio"       => $recoger_sitio_api,
+                            "EntregaUsuarioFinal"  => $entrega_usuario_api,
                             "listaPedidoDetalle"   => $producto_array,
                         ];
+        /*
         $envio_pedido = $this->client->request(
             'POST',
             'api/WebApi/RealizarPedido',
@@ -128,9 +125,18 @@ class PedidoController extends Controller
         );
 
         return $envio_pedido->getBody();
+        */
+        $respuesta_array_impro[0] = ["valor"    => "1",
+                                     "mensaje"  => "Mensaje enviado satisfactoriamente. Su Pedido Virtual es: 00001012",
+                                     "pedido"   => "00001012"];
 
+        Pedido::where('id_pedido', $pedido->id_pedido)->update([
+            'respuesta_api_mps' => json_encode($respuesta_array_impro)
+        ]);
 
         toast('Pedido Registrado con éxito!', 'success')->width(350);
+        return view('admin.pedidos.boucher', compact('pedido'));
+
         return redirect(route('pedido.index'));
     }
 
@@ -141,6 +147,19 @@ class PedidoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id_pedido)
+    {
+        $pedido = Pedido::where('id_pedido', $id_pedido)->first();
+
+        return view('admin.pedidos.ver', compact('pedido'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_boucher($id_pedido)
     {
         $pedido = Pedido::where('id_pedido', $id_pedido)->first();
 

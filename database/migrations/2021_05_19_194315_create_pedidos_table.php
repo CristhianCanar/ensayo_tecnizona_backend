@@ -25,7 +25,7 @@ class CreatePedidosTable extends Migration
             $table->string('CountyId', '20');/*Municipio segun DANE*/
             $table->boolean('RecogerEnSitio');
             $table->boolean('EntregaUsuarioFinal');
-            $table->json('listaPedidoDetalle');
+            $table->json('listaPedidoDetalle')->utf8_encode('utf8mb4_unicode_ci');
             $table->string('dlvTerm', '150')->nullable();/*Tipo transportadora*/
             $table->string('dlvmode', '150')->nullable();/*Servicio de entrega*/
             $table->text('Observaciones')->nullable();

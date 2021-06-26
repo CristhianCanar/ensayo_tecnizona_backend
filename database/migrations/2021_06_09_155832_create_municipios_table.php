@@ -14,8 +14,8 @@ class CreateMunicipiosTable extends Migration
     public function up()
     {
         Schema::create('municipios', function (Blueprint $table) {
-            $table->mediumInteger('id_municipio')->primary();
-            $table->smallInteger('departamento_id')->nullable();
+            $table->string('id_municipio','3');
+            $table->string('departamento_id','2')->nullable();
             $table->string('municipio','60');
             $table->timestamps();
         });

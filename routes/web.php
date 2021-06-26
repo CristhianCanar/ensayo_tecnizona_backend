@@ -27,6 +27,7 @@ Route::resource('user', UserController::class)->middleware(['auth']);
 Route::get('user_gestionar_permisos', 'UserController@user_gestionar_permisos')->name('user_gestionar_permisos')->middleware(['auth']);
 
 Route::resource('pedido', PedidoController::class)->middleware(['auth']);
+Route::get('pedido/boucher/{id_pedido}', 'PedidoController@show_boucher')->name('pedido.show_boucher')->middleware(['auth']);
 Route::get('pedido/getmunicipio/{id_departamento}', 'PedidoController@get_municipios')->name('pedido.getmunicipio')->middleware(['auth']);
 
 
