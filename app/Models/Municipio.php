@@ -9,6 +9,5 @@ class Municipio extends Model
 {
     use HasFactory;
     protected $table = "municipios";
-    protected $primaryKey = "id_municipio";
     protected $guarded = [];
 }

@@ -45,6 +45,7 @@ class CreateProductosTable extends Migration
                 $table->string('shipping_depth');
                 */
             $table->string('Sku', '25');
+            $table->boolean('destacado')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

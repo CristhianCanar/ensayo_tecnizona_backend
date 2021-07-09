@@ -20,7 +20,7 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->estructuraApi = new EstructuraApi();
-        /*
+
         $client_token = new Client();
 
         $respuesta = $client_token->request('POST', 'https://shopcommerce.mps.com.co:7071/Token', [
@@ -38,9 +38,9 @@ class Controller extends BaseController
             // Base URI is used with relative requests
             'base_uri' => 'https://shopcommerce.mps.com.co:7071/',
             // You can set any number of default request options.
-            'timeout'  => 25.0,
+            'timeout'  => 15,
         ]);
-        */
+
     }
 
 }

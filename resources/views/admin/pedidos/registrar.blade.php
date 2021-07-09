@@ -38,9 +38,10 @@
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
                                             title="Campo Obligatorio">*</span> NIT (Asociado)
                                             </label>
-                                    <input class="form-control" value="79580718" disabled>
+                                    <!---->
+                                    <input class="form-control" value="900593363" disabled>
                                     <input type="hidden" class="form-control"
-                                        name="AccountNum" id="AccountNum" value="79580718">
+                                        name="AccountNum" id="AccountNum" value="900593363">
                                 </div>
 
                                 <div class="form-group col-10 col-lg-8">
@@ -93,7 +94,7 @@
                                         Departamento</label>
                                     <select id="StateId" name="StateId"
                                         class="custom-select @error('StateId') is-invalid @enderror" autofocus >
-                                        <option value="" selected disabled>Seleccione Departamento</option>
+                                        <option value="" selected disabled> Seleccione Departamento</option>
                                         @foreach ($departamentos as $departamento)
                                             <option value="{{ $departamento->id_departamento }}">
                                                 {{ $departamento->departamento }}</option>
@@ -111,7 +112,7 @@
                                             data-toggle="tooltip" title="Campo Obligatorio">*</span> Municipio</label>
                                     <select class="custom-select" name="CountyId" id="CountyId"
                                         src="{{ route('pedido.getmunicipio', '#') }}">
-                                        <option value="" selected disabled>Seleccione Municipio</option>
+                                        <option value="" selected disabled> Seleccione Municipio</option>
                                     </select>
                                     @error('CountyId')
                                         <div class="invalid-feedback">

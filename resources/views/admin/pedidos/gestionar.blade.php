@@ -49,6 +49,14 @@
                                                 </a>
                                             </div>
                                             <div class="col-4">
+                                                <a href="{{ route('pedido.show_boucher', $pedido->id_pedido) }}" style="color: #fa8c15;">
+                                                    <i class="la icon-eye" data-toggle="tooltip"
+                                                        title="Ver Boucher del Pedido"></i>
+                                                </a>
+                                            </div>
+
+                                            <!--
+                                            <div class="col-4">
                                                 <form action="{{ route('pedido.destroy', $pedido->id_pedido) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -60,6 +68,7 @@
                                                 </form>
                                             </div>
                                         </div>
+                                        -->
                                     </td>
                                 </tr>
                             @endforeach

@@ -69,7 +69,7 @@ class PedidoController extends Controller
                                    "Marks"      => $marca,
                                    "Bodega"     => "BCOTA"];
         }
-
+        return $producto_array;
         $recoger_sitio = 0;
         $recoger_sitio_api = "false";
         $entrega_usuario = 0;
@@ -81,7 +81,6 @@ class PedidoController extends Controller
             $entrega_usuario = 1;
             $entrega_usuario_api = "true";
         }
-
 
         $pedido = Pedido::create([
             'user_id'                    => Auth::user()->id_user,
@@ -95,21 +94,23 @@ class PedidoController extends Controller
             'RecogerEnSitio'             => $recoger_sitio,
             'EntregaUsuarioFinal'        => $entrega_usuario,
             'listaPedidoDetalle'         => json_encode($producto_array),
-
+            'estado_pedido'              => "Pendiente",
+            'respuesta_api_mps'          => NULL,
         ]);
+
 
         $pedido_array[0] = ["AccountNum"           => "79580718",
                             "NombreClienteEntrega" => $request->input('NombreClienteEntrega'),
                             "ClienteEntrega"       => $request->input('ClienteEntrega'),
                             "TelefonoEntrega"      => $request->input('TelefonoEntrega'),
                             "StateId"              => $request->input('StateId'),
-                            "CountyId"             => "001",
+                            "CountyId"             => $request->input('CountyId'),
                             "DireccionEntrega"     => $request->input('DireccionEntrega'),
                             "RecogerEnSitio"       => $recoger_sitio_api,
                             "EntregaUsuarioFinal"  => $entrega_usuario_api,
                             "listaPedidoDetalle"   => $producto_array,
                         ];
-        /*
+
         $envio_pedido = $this->client->request(
             'POST',
             'api/WebApi/RealizarPedido',
@@ -124,14 +125,26 @@ class PedidoController extends Controller
             ]
         );
 
-        return $envio_pedido->getBody();
-        */
-        $respuesta_array_impro[0] = ["valor"    => "1",
-                                     "mensaje"  => "Mensaje enviado satisfactoriamente. Su Pedido Virtual es: 00001012",
-                                     "pedido"   => "00001012"];
+        $respuesta_api_mps = $envio_pedido->getBody();
+        $respuesta_json_mps = json_decode($respuesta_api_mps);
+        $estado_pedido = $respuesta_json_mps[0]->valor;
+
+
+        if($estado_pedido == 1){
+            $estado_pedido_bd = "Realizado";
+
+        }elseif($estado_pedido == "FAIL"){
+            $estado_pedido = "Fallido";
+
+        }else{
+            $estado_pedido = "Pendiente";
+        }
+
+        //terminar ala $respuesta_api_mps;
 
         Pedido::where('id_pedido', $pedido->id_pedido)->update([
-            'respuesta_api_mps' => json_encode($respuesta_array_impro)
+            'respuesta_api_mps' => json_encode($respuesta_json_mps),
+            'estado_pedido'     => $estado_pedido
         ]);
 
         toast('Pedido Registrado con éxito!', 'success')->width(350);
@@ -162,8 +175,11 @@ class PedidoController extends Controller
     public function show_boucher($id_pedido)
     {
         $pedido = Pedido::where('id_pedido', $id_pedido)->first();
+        $respuesta_api_mps = $pedido->respuesta_api_mps;
+        $array_respuesta = json_decode($respuesta_api_mps);
+        $respuesta_api_mps = $array_respuesta[0];
 
-        return view('admin.pedidos.ver', compact('pedido'));
+        return view('admin.pedidos.boucher', compact('pedido','respuesta_api_mps'));
     }
 
     /**

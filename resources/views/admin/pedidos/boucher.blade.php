@@ -30,6 +30,10 @@
                 <div class="card-body">
                     <div class="form-row justify-content-center">
                         <div class="form-group col-10 col-lg-8">
+                            <h1>Número de Pedido: {{$respuesta_api_mps->pedido}}</h1>
+                        </div>
+                        <br>
+                        <div class="form-group col-10 col-lg-8">
                             <h1>Información Cliente</h1>
                         </div>
 

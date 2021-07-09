@@ -21,11 +21,17 @@ class CreatePedidosTable extends Migration
             $table->string('ClienteEntrega', '80');/*Identificacion del cliente de entrega */
             $table->string('TelefonoEntrega', '20');
             $table->string('DireccionEntrega', '200');
-            $table->string('StateId', '20');/*Deparatamento segun DANE*/
-            $table->string('CountyId', '20');/*Municipio segun DANE*/
+            $table->string('StateId', '2');/*Deparatamento segun DANE*/
+            $table->string('CountyId', '3');/*Municipio segun DANE*/
             $table->boolean('RecogerEnSitio');
             $table->boolean('EntregaUsuarioFinal');
-            $table->json('listaPedidoDetalle')->utf8_encode('utf8mb4_unicode_ci');
+            $table->longText('listaPedidoDetalle');
+
+            //Atributos dependientes de la respuesta e interaccion con la api
+            $table->string('estado_pedido','10')->nullable();//Realizado, Pendiente, Fallido
+            $table->longText('respuesta_api_mps')->nullable();
+
+            //Campos que pueden ser nulos en la api
             $table->string('dlvTerm', '150')->nullable();/*Tipo transportadora*/
             $table->string('dlvmode', '150')->nullable();/*Servicio de entrega*/
             $table->text('Observaciones')->nullable();
