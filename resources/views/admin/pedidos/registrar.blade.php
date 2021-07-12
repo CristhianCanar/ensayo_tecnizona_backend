@@ -38,7 +38,6 @@
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
                                             title="Campo Obligatorio">*</span> NIT (Asociado)
                                             </label>
-                                    <!---->
                                     <input class="form-control" value="900593363" disabled>
                                     <input type="hidden" class="form-control"
                                         name="AccountNum" id="AccountNum" value="900593363">
@@ -191,6 +190,7 @@
                             <div class="form-row text-center mt-4">
                                 <div class="col-12">
                                     <h4>Mi pedido</h4>
+                                    <input type="hidden" name="referencias_productos[]" value="">
                                 </div>
                             </div>
 

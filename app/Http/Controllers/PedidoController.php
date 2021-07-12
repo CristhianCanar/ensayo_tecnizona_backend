@@ -47,8 +47,11 @@ class PedidoController extends Controller
             'NombreClienteEntrega'       => 'required|string|max:80',
             'ClienteEntrega'             => 'required|string|max:80',
             'TelefonoEntrega'            => 'required|string|max:15',
+            'StateId'                    => 'required',
+            'CountyId'                   => 'required',
             'DireccionEntrega'           => 'required|string',
             'RecogerEnSitio'             => 'required',
+            'precios_productos'          => 'required'
         ]);
 
         $productos = $request->input('referencias_productos');
@@ -69,7 +72,7 @@ class PedidoController extends Controller
                                    "Marks"      => $marca,
                                    "Bodega"     => "BCOTA"];
         }
-        return $producto_array;
+
         $recoger_sitio = 0;
         $recoger_sitio_api = "false";
         $entrega_usuario = 0;
@@ -93,13 +96,13 @@ class PedidoController extends Controller
             'DireccionEntrega'           => $request->input('DireccionEntrega'),
             'RecogerEnSitio'             => $recoger_sitio,
             'EntregaUsuarioFinal'        => $entrega_usuario,
-            'listaPedidoDetalle'         => json_encode($producto_array),
+            'listaPedidoDetalle'         => json_encode($producto_array, JSON_UNESCAPED_UNICODE),
             'estado_pedido'              => "Pendiente",
             'respuesta_api_mps'          => NULL,
         ]);
 
 
-        $pedido_array[0] = ["AccountNum"           => "79580718",
+        $pedido_array[0] = ["AccountNum"           => $request->input('AccountNum'),
                             "NombreClienteEntrega" => $request->input('NombreClienteEntrega'),
                             "ClienteEntrega"       => $request->input('ClienteEntrega'),
                             "TelefonoEntrega"      => $request->input('TelefonoEntrega'),
@@ -131,7 +134,7 @@ class PedidoController extends Controller
 
 
         if($estado_pedido == 1){
-            $estado_pedido_bd = "Realizado";
+            $estado_pedido = "Realizado";
 
         }elseif($estado_pedido == "FAIL"){
             $estado_pedido = "Fallido";
@@ -143,14 +146,12 @@ class PedidoController extends Controller
         //terminar ala $respuesta_api_mps;
 
         Pedido::where('id_pedido', $pedido->id_pedido)->update([
-            'respuesta_api_mps' => json_encode($respuesta_json_mps),
+            'respuesta_api_mps' => json_encode($respuesta_json_mps, JSON_UNESCAPED_UNICODE),
             'estado_pedido'     => $estado_pedido
         ]);
 
         toast('Pedido Registrado con éxito!', 'success')->width(350);
-        return view('admin.pedidos.boucher', compact('pedido'));
-
-        return redirect(route('pedido.index'));
+        return redirect(route('pedido.show_voucher',$pedido->id_pedido));
     }
 
     /**
@@ -172,14 +173,19 @@ class PedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_boucher($id_pedido)
+    public function show_voucher($id_pedido)
     {
         $pedido = Pedido::where('id_pedido', $id_pedido)->first();
-        $respuesta_api_mps = $pedido->respuesta_api_mps;
-        $array_respuesta = json_decode($respuesta_api_mps);
-        $respuesta_api_mps = $array_respuesta[0];
 
-        return view('admin.pedidos.boucher', compact('pedido','respuesta_api_mps'));
+        $respuesta_api_mps = $pedido->respuesta_api_mps;
+        if($respuesta_api_mps != NULL){
+            $array_respuesta = json_decode($respuesta_api_mps);
+            $respuesta_api_mps = $array_respuesta[0];
+        }else{
+            $respuesta_api_mps = NULL;
+        }
+
+        return view('admin.pedidos.voucher', compact('pedido','respuesta_api_mps'));
     }
 
     /**

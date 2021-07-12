@@ -1,0 +1,47 @@
+.spinner-grow{
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.pedido-realizado{
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #238276;
+    vertical-align: text-bottom;
+    border-radius: 50px;
+}
+
+.pedido-pendiente{
+	display: inline-block;
+	width: 1.5rem;
+	height: 1.5rem;
+	vertical-align: text-bottom;
+	background-color: #f6c23e !important;
+	border-radius: 50px;
+}
+
+.pedido-fallido{
+	display: inline-block;
+	width: 1.5rem;
+	height: 1.5rem;
+	vertical-align: text-bottom;
+	background-color: #dd3333 !important;
+	border-radius: 50px;
+}
+
+.voucher-fondo-exitoso{
+    background-color: #12b448;
+    color: white;
+}
+
+.voucher-fondo-pendiente{
+    background-color: #f6c23e;
+    color: white;
+}
+
+.voucher-fondo-fallido
+{
+    background-color: #dd3333;
+    color: white;
+}
