@@ -75,10 +75,10 @@
                                 <div class="form-group col-10 col-lg-8">
                                     <label class="form-label" for="text"><span data-toggle="tooltip"
                                             title="Campo Obligatorio">*</span> Teléfono</label>
-                                    <input type="text"
+                                    <input type="number" min="1" max="99999999"
                                         class="form-control @error('TelefonoEntrega') is-invalid @enderror"
                                         name="TelefonoEntrega" id="TelefonoEntrega"
-                                        value="{{ old('TelefonoEntrega') }}" placeholder="3221234567" maxlength="15"
+                                        value="{{ old('TelefonoEntrega') }}" placeholder="3221234567"
                                          required>
                                     @error('TelefonoEntrega')
                                         <div class="invalid-feedback">

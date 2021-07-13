@@ -19,7 +19,7 @@ class Controller extends BaseController
     {
         $this->estructuraApi = new EstructuraApi();
 
-        /* No es beuena idea de forma global ya que iterriamos siempre a ai Mps cada vez que se use un controlador
+        /* No es buena idea de forma global ya que iterriamos siempre a api Mps cada vez que se use un controlador
         $client_token = new Client();
 
         $respuesta = $client_token->request('POST', 'https://shopcommerce.mps.com.co:7071/Token', [

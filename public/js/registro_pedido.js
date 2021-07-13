@@ -92,7 +92,7 @@ function agregar_producto(part_num, name, precio){
             '<td>'+
                 '<div class="row">'+
                     '<div class="col-12">'+
-                        '<input type="number" class="form-control form-control-sm" id="cantidad" name="cantidades[]" placeholder="1" min="1" max="20" value="1">'+
+                        '<input type="number" class="form-control form-control-sm" id="cantidad" name="cantidades[]" placeholder="1" min="1" max="999" value="1">'+
                     '</div>'+
                 '</div>'+
             '</td>'+

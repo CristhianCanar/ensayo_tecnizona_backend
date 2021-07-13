@@ -125,7 +125,7 @@ class PedidoController extends Controller
                 'form_params' => [
                     'grant_type'    => 'password',
                     'username'      => 'pruebas@stac.com.co',
-                    'password'      => 'Hka2cTyLI'
+                    'password'      => 'Hka2cTyLIR'
                 ]
             ]);
             $autorizacion = json_decode($respuesta->getBody(), true);
