@@ -27,6 +27,7 @@ Route::resource('user', UserController::class)->middleware(['auth']);
 Route::get('user_gestionar_permisos', 'UserController@user_gestionar_permisos')->name('user_gestionar_permisos')->middleware(['auth']);
 
 Route::resource('pedido', PedidoController::class)->middleware(['auth']);
+Route::get('reintentar_pendientes', 'PedidoController@reintentar_pendientes')->name('reintentar_pendientes')->middleware(['auth']);
 Route::get('pedido/voucher/{id_pedido}', 'PedidoController@show_voucher')->name('pedido.show_voucher')->middleware(['auth']);
 Route::get('pedido/getmunicipio/{id_departamento}', 'PedidoController@get_municipios')->name('pedido.getmunicipio')->middleware(['auth']);
 

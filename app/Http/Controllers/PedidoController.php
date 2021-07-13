@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\Producto;
 use ArrayObject;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
@@ -43,6 +45,7 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
+        //Validacion Backend formulario
         $request->validate([
             'NombreClienteEntrega'       => 'required|string|max:80',
             'ClienteEntrega'             => 'required|string|max:80',
@@ -51,7 +54,7 @@ class PedidoController extends Controller
             'CountyId'                   => 'required',
             'DireccionEntrega'           => 'required|string',
             'RecogerEnSitio'             => 'required',
-            'precios_productos'          => 'required'
+            'referencias_productos'      => 'required'
         ]);
 
         $productos = $request->input('referencias_productos');
@@ -114,13 +117,45 @@ class PedidoController extends Controller
                             "listaPedidoDetalle"   => $producto_array,
                         ];
 
-        $envio_pedido = $this->client->request(
+        //Cliente para la obtención del token actual
+        $cliente_token = new Client();
+        //Credenciales de acceso de la empresa para el uso de la api de MPS
+        try{
+            $respuesta = $cliente_token->request('POST', 'https://shopcommerce.mps.com.co:7071/Token', [
+                'form_params' => [
+                    'grant_type'    => 'password',
+                    'username'      => 'pruebas@stac.com.co',
+                    'password'      => 'Hka2cTyLI'
+                ]
+            ]);
+            $autorizacion = json_decode($respuesta->getBody(), true);
+
+            $token_acceso_mps = $autorizacion["access_token"];
+
+            toast('Conexión con MPS establecida!', 'success')->width(350);
+
+        }catch(BadResponseException $e){
+            toast('Pedido autoguardado, Error de conexión con MPS! (Credenciales invalidas)' , 'error')->width(350);
+            return redirect(route('pedido.index'));
+        }
+
+        //Uso del cliente para realizar el pedido ante MPS
+        $cliente_pedido = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://shopcommerce.mps.com.co:7071/',
+            // You can set any number of default request options.
+            'timeout'  => 10,
+        ]);
+
+        //Envio del pedido segun los requerimiento de la API de MPS
+
+        $envio_pedido = $cliente_pedido->request(
             'POST',
             'api/WebApi/RealizarPedido',
             [
                 'headers' =>
                 [
-                    'Authorization' => "Bearer {$this->token_acceso_mps}"
+                    'Authorization' => "Bearer {$token_acceso_mps}"
                 ],
                 'form_params' => [
                     "listaPedido" => $pedido_array
@@ -143,8 +178,6 @@ class PedidoController extends Controller
             $estado_pedido = "Pendiente";
         }
 
-        //terminar ala $respuesta_api_mps;
-
         Pedido::where('id_pedido', $pedido->id_pedido)->update([
             'respuesta_api_mps' => json_encode($respuesta_json_mps, JSON_UNESCAPED_UNICODE),
             'estado_pedido'     => $estado_pedido
@@ -164,7 +197,13 @@ class PedidoController extends Controller
     {
         $pedido = Pedido::where('id_pedido', $id_pedido)->first();
 
-        return view('admin.pedidos.ver', compact('pedido'));
+        $departamento = Departamento::where('id_departamento',$pedido->StateId)->first();
+
+        $lista_pedido = json_decode($pedido->listaPedidoDetalle);
+
+        $respuesta_api_mps = json_decode($pedido->respuesta_api_mps);
+
+        return view('admin.pedidos.ver', compact('pedido','departamento', 'lista_pedido', 'respuesta_api_mps'));
     }
 
     /**
@@ -266,6 +305,107 @@ class PedidoController extends Controller
         return redirect(route('pedido.index'));
     }
 
+    public function reintentar_pendientes(){
+
+        $contador_pedidos_rein_exitosos = 0;
+        $contador_pedidos_rein_fallidos = 0;
+
+        $pedidos = Pedido::where('estado_pedido','like','Pendiente')->get();
+
+        if($pedidos != "[]"){
+            //Cliente para la obtención del token actual
+            $cliente_token = new Client();
+            //Credenciales de acceso de la empresa para el uso de la api de MPS
+            try{
+                $respuesta = $cliente_token->request('POST', 'https://shopcommerce.mps.com.co:7071/Token', [
+                    'form_params' => [
+                        'grant_type'    => 'password',
+                        'username'      => 'pruebas@stac.com.co',
+                        'password'      => 'Hka2cTyLIR'
+                    ]
+                ]);
+                $autorizacion = json_decode($respuesta->getBody(), true);
+
+                $token_acceso_mps = $autorizacion["access_token"];
+
+                //Uso del cliente para realizar el pedido ante MPS
+                $cliente_pedido = new Client([
+                    // Base URI is used with relative requests
+                    'base_uri' => 'https://shopcommerce.mps.com.co:7071/',
+                    // You can set any number of default request options.
+                    'timeout'  => 10,
+                ]);
+
+                toast('Conexión con MPS establecida!', 'success')->width(350);
+            }catch(BadResponseException $e){
+                toast('No fue posible reintentar pedidos en estado Pendiente, Error de conexión con MPS! (Credenciales invalidas)' , 'error')->width(450);
+                return redirect(route('pedido.index'));
+            }
+
+            foreach($pedidos as $pedido){
+                $recoger_sitio_api = "false";
+                $entrega_usuario_api = "false";
+                if ($pedido->RecogerEnSitio == 1) {
+                    $recoger_sitio_api = "true";
+                }else{
+                    $entrega_usuario_api = "true";
+                }
+                $productos_array = json_decode($pedido->listaPedidoDetalle, JSON_UNESCAPED_UNICODE);
+
+                $pedido_array[0] = ["AccountNum"           => $pedido->AccountNum,
+                                    "NombreClienteEntrega" => $pedido->NombreClienteEntrega,
+                                    "ClienteEntrega"       => $pedido->ClienteEntrega,
+                                    "TelefonoEntrega"      => $pedido->TelefonoEntrega,
+                                    "StateId"              => $pedido->StateId,
+                                    "CountyId"             => $pedido->CountyId,
+                                    "DireccionEntrega"     => $pedido->DireccionEntrega,
+                                    "RecogerEnSitio"       => $recoger_sitio_api,
+                                    "EntregaUsuarioFinal"  => $entrega_usuario_api,
+                                    "listaPedidoDetalle"   => $productos_array,
+                                ];
+
+                $envio_pedido = $cliente_pedido->request(
+                    'POST',
+                    'api/WebApi/RealizarPedido',
+                    [
+                        'headers' =>
+                        [
+                            'Authorization' => "Bearer {$token_acceso_mps}"
+                        ],
+                        'form_params' => [
+                            "listaPedido" => $pedido_array
+                        ]
+                    ]
+                );
+
+                $respuesta_api_mps = $envio_pedido->getBody();
+                $respuesta_json_mps = json_decode($respuesta_api_mps);
+                $estado_pedido = $respuesta_json_mps[0]->valor;
+
+                if($estado_pedido == 1){
+                    $estado_pedido = "Realizado";
+                    $contador_pedidos_rein_exitosos++;
+                }elseif($estado_pedido == "FAIL"){
+                    $estado_pedido = "Fallido";
+                    $contador_pedidos_rein_fallidos++;
+                }else{
+                    $estado_pedido = "Pendiente";
+                }
+
+                Pedido::where('id_pedido', $pedido->id_pedido)->update([
+                    'respuesta_api_mps' => json_encode($respuesta_json_mps, JSON_UNESCAPED_UNICODE),
+                    'estado_pedido'     => $estado_pedido
+                ]);
+
+            }
+            toast('Se finalizaron '.$contador_pedidos_rein_exitosos.' Pedidos Pendientes, al contrario '.$contador_pedidos_rein_fallidos.' pedidos que tuvieron error' , 'info')->width(450)->autoClose(10000);
+            return redirect(route('pedido.index'));
+        }else{
+            toast('No hay pedidos en estado Pendiente' , 'info')->width(350);
+            return redirect(route('pedido.index'));
+        }
+    }
+
     /**
      * Funciones y metodos de la api
      *
@@ -287,6 +427,7 @@ class PedidoController extends Controller
             );
         }
     }
+
 
     public function get_municipios($id_departamento){
         $municipios = Municipio::where('departamento_id',$id_departamento)->get();

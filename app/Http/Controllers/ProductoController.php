@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -27,20 +29,50 @@ class ProductoController extends Controller
     public function cargar_productos()
     {
         /* Poblar los datos de la base de datos con la api*/
-        $catalogo = $this->client->request(
+
+        //Cliente para la obtención del token actual
+        $cliente_token = new Client();
+        //Credenciales de acceso de la empresa para el uso de la api de MPS
+        try {
+            $respuesta = $cliente_token->request('POST', 'https://shopcommerce.mps.com.co:7071/Token', [
+                'form_params' => [
+                    'grant_type'    => 'password',
+                    'username'      => 'pruebas@stac.com.co',
+                    'password'      => 'Hka2cTyLIR'
+                ]
+            ]);
+            $autorizacion = json_decode($respuesta->getBody(), true);
+
+            $token_acceso_mps = $autorizacion["access_token"];
+
+            toast('Conexión con MPS establecida!', 'success')->width(350);
+        } catch (BadResponseException $e) {
+            toast('Error de conexión con MPS! (Credenciales invalidas)', 'error')->width(350);
+            return redirect(route('producto.index'));
+        }
+
+        //Uso del cliente para realizar el pedido ante MPS
+        $cliente_carga_productos = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://shopcommerce.mps.com.co:7071/',
+            // You can set any number of default request options.
+            'timeout'  => 10,
+        ]);
+
+        $catalogo = $cliente_carga_productos->request(
             'GET',
             'api/WebApi/GetConsultarCatalogo',
             [
                 'headers' =>
                 [
-                    'Authorization' => "Bearer {$this->token_acceso_mps}"
+                    'Authorization' => "Bearer {$token_acceso_mps}"
                 ]
             ]
         )->getBody();
 
         $productos = json_decode($catalogo, true);
 
-        foreach ($productos as $producto){
+        foreach ($productos as $producto) {
             Producto::create([
                 'PartNum'                 => $producto['PartNum'],
                 'Familia'                 => $producto['Familia'],
@@ -204,7 +236,7 @@ class ProductoController extends Controller
         toast('Producto Actualizado con éxito!', 'success')->width(250);
         return redirect(route('producto.index'));
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -213,7 +245,7 @@ class ProductoController extends Controller
      */
     public function destroy($id_producto)
     {
-        Producto::where('id_producto',$id_producto)->delete();
+        Producto::where('id_producto', $id_producto)->delete();
         toast('Producto Eliminado con éxito!', 'info')->width(250);
         return redirect(route('producto.index'));
     }
@@ -226,13 +258,13 @@ class ProductoController extends Controller
     public function catalogo_tecnizona()
     {
         $productos = Producto::orderBy('id_producto', 'desc')->paginate(50);
-        if($productos != []){
+        if ($productos != []) {
             $this->estructuraApi->setResultado($productos);
             return response()->json(
                 $this->estructuraApi->toResponse($productos)
             );
-        }else{
-            $this->estructuraApi->setEstado("INF-001","info","Conectado a la api, sin datos");
+        } else {
+            $this->estructuraApi->setEstado("INF-001", "info", "Conectado a la api, sin datos");
             $this->estructuraApi->setResultado($productos);
             return response()->json(
                 $this->estructuraApi->toResponse($productos)
@@ -240,11 +272,12 @@ class ProductoController extends Controller
         }
     }
 
-    public function buscar_producto(Request $request){
+    public function buscar_producto(Request $request)
+    {
         $datos = $request->all();
         $producto = Producto::select(['PartNum', 'Name', 'precio'])
-                            ->where('PartNum','like',$datos['ref_producto']."%")
-                            ->take(5)->get();
+            ->where('PartNum', 'like', $datos['ref_producto'] . "%")
+            ->take(5)->get();
         return $producto;
     }
 }

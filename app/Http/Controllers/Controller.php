@@ -14,20 +14,19 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public $estructuraApi;
-    public $token_acceso_mps;
-    public $client;
 
     public function __construct()
     {
         $this->estructuraApi = new EstructuraApi();
 
+        /* No es beuena idea de forma global ya que iterriamos siempre a ai Mps cada vez que se use un controlador
         $client_token = new Client();
 
         $respuesta = $client_token->request('POST', 'https://shopcommerce.mps.com.co:7071/Token', [
             'form_params' => [
-                'grant_type' => 'password',
-                'username' => 'pruebas@stac.com.co',
-                'password' => 'Hka2cTyLIR'
+                'grant_type'    => 'password',
+                'username'      => 'pruebas@stac.com.co',
+                'password'      => 'Hka2cTyLIR'
             ]
         ]);
         $autorizacion = json_decode($respuesta->getBody(), true);
@@ -40,6 +39,8 @@ class Controller extends BaseController
             // You can set any number of default request options.
             'timeout'  => 15,
         ]);
+
+        */
 
     }
 

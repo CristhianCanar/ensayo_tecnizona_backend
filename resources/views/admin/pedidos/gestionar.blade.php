@@ -53,7 +53,7 @@
                                                 <div class="col-4">
                                                     <a href="{{ route('pedido.show_voucher', $pedido->id_pedido) }}"
                                                         style="color: #31CE36;">
-                                                        <i class="la icon-note" data-toggle="tooltip"
+                                                        <i class="la icon-doc" data-toggle="tooltip"
                                                             title="Ver Boucher del Pedido"></i>
                                                     </a>
                                                 </div>

@@ -22,8 +22,9 @@
 	<script src="{{asset('atlantis/assets/js/plugin/chart.js/chart.min.js')}}"></script>
     <!-- Sparkline -->
 	<script src="{{asset('atlantis/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
-
+    <!--JS de TECNIZONA HUB-->
 	<script src="{{ asset('js/admin.js') }}"></script>
+	<script src="{{ asset('js/registro_pedido.js') }}"></script>
 	<!-- Fonts and icons -->
 	<script src="{{ asset('atlantis/assets/js/plugin/webfont/webfont.min.js') }}"></script>
 	<script>
@@ -266,7 +267,7 @@
 							</a>
 							<div class="collapse @if(request()->routeIs('pedido.index', 'pedido.create', 'pedido.show', 'pedido.edit')) show @endif" id="pedidos">
 								<ul class="nav nav-collapse">
-									<li class="@if(request()->routeIs('pedido.create')) active @endif">
+                                    <li class="@if(request()->routeIs('pedido.create')) active @endif">
 										<a href="{{ route('pedido.create') }}">
 											<span class="sub-item">Registrar Pedido</span>
 										</a>
@@ -276,6 +277,11 @@
 											<span class="sub-item">Gestionar Pedidos</span>
 										</a>
 									</li>
+                                    <li class="@if(request()->routeIs('reintentar_pendientes')) active @endif">
+                                        <a href="{{ route('reintentar_pendientes') }}" onclick="return confirm('Seguro que desea reintentar los pedidos en estado pendiente?')">
+                                            <span class="sub-item">Reintentar pedidos pendientes</span>
+                                        </a>
+                                    </li>
 								</ul>
 							</div>
 						</li>

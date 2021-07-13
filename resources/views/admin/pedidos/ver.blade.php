@@ -29,6 +29,27 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-row justify-content-center">
+
+                        <div class="form-group col-10 col-lg-8">
+                            <h1>Información Pedido</h1>
+                        </div>
+                        @isset($respuesta_api_mps[0])
+                            <div class="form-group col-10 col-lg-8">
+                                <label class="form-label" for="text">Número Pedido: </label>
+                                <h5>{{ $respuesta_api_mps[0]->pedido }}</h5>
+                            </div>
+                        @endisset
+
+                        <div class="form-group col-10 col-lg-8">
+                            <label class="form-label" for="text">Estado Pedido: </label>
+                            <h5>{{ $pedido->estado_pedido }}</h5>
+                        </div>
+
+                        <div class="form-group col-10 col-lg-8">
+                            <label class="form-label" for="text">Fecha Pedido: </label>
+                            <h5>{{ $pedido->updated_at }}</h5>
+                        </div>
+
                         <div class="form-group col-10 col-lg-8">
                             <h1>Información Cliente</h1>
                         </div>
@@ -54,63 +75,52 @@
                         </div>
 
                         <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Descripción</label>
-                            <h5>{{ $pedido->Description }}</h5>
+                            <label class="form-label" for="text">Departamento</label>
+                            <h5>{{ $departamento->departamento }}</h5>
                         </div>
 
                         <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Marca</label>
-                            <h5>{{ $pedido->Marks }}</h5>
+                            <label class="form-label" for="text">Dirección de entrega</label>
+                            <h5>{{ $pedido->DireccionEntrega }}</h5>
                         </div>
 
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Moneda</label>
-                            <h5>{{ $pedido->CurrencyDef }}</h5>
+                        @if ($pedido->RecogerEnSitio)
+                            <div class="form-group col-10 col-lg-8">
+                                <label class="form-label" for="text">El pedido se recogerá en la empresa</label>
+                            </div>
+                        @else
+                            <div class="form-group col-10 col-lg-8">
+                                <label class="form-label" for="text">El pedido se enviará a la dirección del Cliente</label>
+                            </div>
+                        @endif
+
+                        <div class="form-row text-center mt-4 col-10 col-lg-8">
+                            <div class="col-12">
+                                <h4>Mi pedido</h4>
+                            </div>
                         </div>
 
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Precio minimo del pedido</label>
-                            <h5>{{ $pedido->Salesminprice }}</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Precio máximo del pedido</label>
-                            <h5>{{ $pedido->Salesmaxprice }}</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Precio</label>
-                            <h5>{{ $pedido->precio }}</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Cantidad</label>
-                            <h5>{{ $pedido->Quantity }}</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Clasificación Tributaria</label>
-                            <h5>{{ $pedido->TributariClassification }}</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Nombre Imagen</label>
-                            <h5>{{ $pedido->NombreImagen }}</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Descuento</label>
-                            <h5>{{ $pedido->Descuento }}</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Shipping</label>
-                            <h5>-1</h5>
-                        </div>
-
-                        <div class="form-group col-10 col-lg-8">
-                            <label class="form-label" for="text">Sku</label>
-                            <h5>{{ $pedido->Sku }}</h5>
+                        <div class="form-group table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Referencia</th>
+                                        <th scope="col">Nombre</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th scope="col" class="text-right">Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_pedido">
+                                    @foreach ($lista_pedido as $producto)
+                                    <tr>
+                                        <td class="text-truncate">{{ $producto->PartNum }}</td>
+                                        <td class="text-truncate" style="max-width: 450px;" data-toggle="tooltip" title="{{ $producto->Name }}">{{ $producto->Name }}</td>
+                                        <td class="text-center">{{ $producto->Cantidad }}</td>
+                                        <td class="text-truncate">$ {{ $producto->Precio }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
