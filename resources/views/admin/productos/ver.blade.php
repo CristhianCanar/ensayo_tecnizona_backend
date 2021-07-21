@@ -29,6 +29,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-row justify-content-center">
+
+                        <div class="form-group col-10 col-lg-8">
+                            <img src="https://recursos.mps.com.co/images/Productos/{{$producto->NombreImagen}}" class="img-fluid" alt="{{$producto->NombreImagen}}">
+                        </div>
+
                         <div class="form-group col-10 col-lg-8">
                             <label class="form-label" for="text">Referencia</label>
                             <h5>{{ $producto->PartNum }}</h5>

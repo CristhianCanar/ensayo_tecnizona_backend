@@ -7,12 +7,17 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ProductoController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+    *   Función: index()
+    *   Ruta:    producto.index
+    *   Autor:   Cristhian Cañar
+    *   Descripción: Función encargada de desplegar la vista gestionar Productos con los datos de la tabla Productos
+    *   Fecha de Creación: 2021-06-01
+    *   Versión: 1.0
      */
     public function index()
     {
@@ -22,14 +27,16 @@ class ProductoController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+    *   Función: index()
+    *   Ruta:    cargar_productos
+    *   Autor:   Cristhian Cañar
+    *   Descripción: Función encargada de obtener los productos de la API y almacenarlos
+    *                en la tabla Productos
+    *   Fecha de Creación: 2021-06-01
+    *   Versión: 1.0
      */
     public function cargar_productos()
     {
-        /* Poblar los datos de la base de datos con la api*/
-
         //Cliente para la obtención del token actual
         $cliente_token = new Client();
         //Credenciales de acceso de la empresa para el uso de la api de MPS
@@ -71,37 +78,81 @@ class ProductoController extends Controller
         )->getBody();
 
         $productos = json_decode($catalogo, true);
+        //Obtener los datos de la tabla producto para validacion
+        $info_productos = Producto::count();
 
-        foreach ($productos as $producto) {
-            Producto::create([
-                'PartNum'                 => $producto['PartNum'],
-                'Familia'                 => $producto['Familia'],
-                'Categoria'               => $producto['Categoria'],
-                'Name'                    => $producto['Name'],
-                'Description'             => $producto['Description'],
-                'Marks'                   => $producto['Marks'],
-                'Salesminprice'           => $producto['Salesminprice'],
-                'Salesmaxprice'           => $producto['Salesmaxprice'],
-                'precio'                  => $producto['precio'],
-                'CurrencyDef'             => $producto['CurrencyDef'],
-                'Quantity'                => $producto['Quantity'],
-                'TributariClassification' => $producto['TributariClassification'],
-                'NombreImagen'            => $producto['NombreImagen'],
-                'Descuento'               => $producto['Descuento'],
-                'shipping'                => $producto['shipping'],
-                'Sku'                     => $producto['Sku'],
+        $contador_productos_eliminados = 0;
+        $contador_productos_actualizados = 0;
+        $contador_productos_registrados = 0;
 
-            ]);
+        if($info_productos == 0){
+            foreach ($productos as $producto) {
+                if($producto['Quantity'] > 0){
+                    Producto::create([
+                        'PartNum'                 => $producto['PartNum'],
+                        'Familia'                 => $producto['Familia'],
+                        'Categoria'               => $producto['Categoria'],
+                        'Name'                    => $producto['Name'],
+                        'Description'             => $producto['Description'],
+                        'Marks'                   => $producto['Marks'],
+                        'Salesminprice'           => $producto['Salesminprice'],
+                        'Salesmaxprice'           => $producto['Salesmaxprice'],
+                        'precio'                  => $producto['precio'],
+                        'CurrencyDef'             => $producto['CurrencyDef'],
+                        'Quantity'                => $producto['Quantity'],
+                        'TributariClassification' => $producto['TributariClassification'],
+                        'NombreImagen'            => $producto['NombreImagen'],
+                        'Descuento'               => $producto['Descuento'],
+                        'shipping'                => $producto['shipping'],
+                        'Sku'                     => $producto['Sku'],
+                    ]);
+                }
+                $contador_productos_registrados++;
+            }
+            alert()->success(''.$contador_productos_registrados.' Productos registrados con éxito!')->autoClose(5000);
+            return redirect(route('producto.index'));
+
+        }else{
+            foreach ($productos as $producto) {
+                if($producto['Quantity'] > 0){
+                    $producto_existente = Producto::where('PartNum',$producto['PartNum'])->first();
+                    if($producto_existente != NULL){
+                        Producto::where('id_producto', $producto_existente->id_producto)->update([
+                            'Familia'                 => $producto['Familia'],
+                            'Categoria'               => $producto['Categoria'],
+                            'Description'             => $producto['Description'],
+                            'Marks'                   => $producto['Marks'],
+                            'Salesminprice'           => $producto['Salesminprice'],
+                            'Salesmaxprice'           => $producto['Salesmaxprice'],
+                            'precio'                  => $producto['precio'],
+                            'CurrencyDef'             => $producto['CurrencyDef'],
+                            'Quantity'                => $producto['Quantity'],
+                            'TributariClassification' => $producto['TributariClassification'],
+                            'NombreImagen'            => $producto['NombreImagen'],
+                            'Descuento'               => $producto['Descuento'],
+                        ]);
+                    }
+                    $contador_productos_actualizados++;
+                }else{
+                    Producto::where('PartNum',$producto['PartNum'])->delete();
+                    $contador_productos_eliminados++;
+                }
+
+            }
+            alert()->info(''.$contador_productos_actualizados.' Productos actualizados con éxito!, '.$contador_productos_eliminados.' Productos eliminados por inexistencia en inventario MPS')->autoClose(5000);
+            return redirect(route('producto.index'));
+
         }
 
-        alert()->success('Productos cargados con éxito!')->autoClose(5000);
-        return redirect(route('producto.index'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+    *   Función: index()
+    *   Ruta:    producto.index
+    *   Autor:   Cristhian Cañar
+    *   Descripción: Función encargada de desplegar la vista gestionar Pedidos con los datos de la tabla Pedidos
+    *   Fecha de Creación: 2021-06-01
+    *   Versión: 1.0
      */
     public function create()
     {

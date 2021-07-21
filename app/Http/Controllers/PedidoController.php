@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Auth;
 class PedidoController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+    *   Función: index()
+    *   Ruta:    pedido.index
+    *   Autor:   Cristhian Cañar
+    *   Descripción: Función encargada de desplegar la vista gestionar Pedidos con los datos de la tabla Pedidos
+    *   Fecha de Creación: 2021-06-01
+    *   Versión: 1.0
      */
     public function index()
     {
@@ -27,9 +30,12 @@ class PedidoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+    *   Función: create()
+    *   Autor:   Cristhian Cañar
+    *   Ruta:    pedido.create
+    *   Descripción: Función encargada de desplegar la vista registrar Pedido
+    *   Fecha de Creación: 2021-06-01
+    *   Versión: 1.0
      */
     public function create()
     {
@@ -38,11 +44,13 @@ class PedidoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    *   Función: store()
+    *   Autor:   Cristhian Cañar
+    *   Ruta:    pedido.store
+    *   Descripción: Función encargada de validar y almacenar en la Base de datos Tecnizona el pedido
+    *   Fecha de Creación: 2021-06-01
+    *   Versión: 1.0
+    */
     public function store(Request $request)
     {
         //Validacion Backend formulario
@@ -427,7 +435,6 @@ class PedidoController extends Controller
             );
         }
     }
-
 
     public function get_municipios($id_departamento){
         $municipios = Municipio::where('departamento_id',$id_departamento)->get();
